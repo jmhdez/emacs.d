@@ -61,6 +61,8 @@
 (add-hook 'js2-mode-hook 'esk-paredit-nonlisp)
 (setq js2-highlight-level 3)
 
+(require 'js2-refactor)
+(js2r-add-keybindings-with-prefix "C-c C-m")
 
 (require 'flycheck)
 (add-hook 'js2-mode-hook
