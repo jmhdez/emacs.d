@@ -51,24 +51,33 @@
 ;; Save here instead of littering current directory with emacs backup files
 (setq backup-directory-alist `(("." . "~/.saves")))
 
-;; Configuracion Javascript
+;; Zenburn theme
+(load-theme 'zenburn t)
+
+;; Set UTF-8 as default encoding
+(set-language-environment "UTF-8")
+
+;; Javascript settings
 
 ;; major-mode
 (add-to-list 'auto-mode-alist
              '("\\.js\\'" . js2-mode))
 
+;; Autocomplete (not working?)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
+;; Syntax highlight
 (setq js2-highlight-level 3)
 
+;; Javascript refactoring
 (require 'js2-refactor)
-(js2r-add-keybindings-with-prefix "C-c C-m")
+(add-hook 'js2-mode-hook
+          (lambda () (js2r-add-keybindings-with-prefix "C-c C-m")))
 
+;; JSHint-style checking
 (require 'flycheck)
 (add-hook 'js2-mode-hook
           (lambda () (flycheck-mode t)))
 
-;; Zenburn theme
-(load-theme 'zenburn t)
+;; Autocomplete braces
+(add-hook 'js2-mode-hook 'electric-pair-mode)
 
-;; UTF-8 as default encoding
-(set-language-environment "UTF-8")
