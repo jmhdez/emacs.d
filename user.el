@@ -58,7 +58,6 @@
              '("\\.js\\'" . js2-mode))
 
 (add-hook 'js2-mode-hook 'ac-js2-mode)
-(add-hook 'js2-mode-hook 'esk-paredit-nonlisp)
 (setq js2-highlight-level 3)
 
 (require 'js2-refactor)
