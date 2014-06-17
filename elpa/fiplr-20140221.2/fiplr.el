@@ -64,7 +64,7 @@
   "A list of files/directories to look for that mark a project root.")
 
 (defvar *fiplr-default-ignored-globs*
-  '((directories (".git" ".svn" ".hg" ".bzr"))
+  '((directories (".git" ".svn" ".hg" ".bzr" "node_modules"))
     (files (".#*" "*~" "*.so" "*.jpg" "*.png" "*.gif" "*.pdf" "*.gz" "*.zip")))
   "An alist of files and directories to exclude from searches.")
 
