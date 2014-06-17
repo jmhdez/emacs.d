@@ -69,3 +69,6 @@
 
 ;; Zenburn theme
 (load-theme 'zenburn t)
+
+;; UTF-8 as default encoding
+(set-language-environment "UTF-8")
