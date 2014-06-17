@@ -68,3 +68,5 @@
 (add-hook 'js2-mode-hook
           (lambda () (flycheck-mode t)))
 
+;; Zenburn theme
+(load-theme 'zenburn t)
