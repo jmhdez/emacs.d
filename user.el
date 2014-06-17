@@ -80,3 +80,5 @@
 ;; Autocomplete braces
 (add-hook 'js2-mode-hook 'electric-pair-mode)
 
+;; Add global key binding to fiplr-find-file
+(global-set-key (kbd "C-x p") 'fiplr-find-file)
