@@ -82,3 +82,6 @@
 
 ;; Add global key binding to fiplr-find-file
 (global-set-key (kbd "C-x p") 'fiplr-find-file)
+
+;; Guess indent for html files
+(add-hook 'html-mode-hook 'sgml-guess-indent)
