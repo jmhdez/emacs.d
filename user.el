@@ -93,3 +93,6 @@
 
 ;; Set path
 (set-exec-path-from-shell-PATH)
+
+;; Show line numbers
+(global-linum-mode t)
