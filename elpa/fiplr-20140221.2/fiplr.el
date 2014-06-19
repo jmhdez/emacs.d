@@ -215,15 +215,6 @@ If no root marker is found, the current working directory is used."
                   (file-exists-p (concat dir marker)))
                 root-markers)))
 
-(defun fiplr-find-path ()
-  "Gets the path to find tool. In windows, its expected to find
-   a unix compatible find executable under ~/.emacs.d/bin/find.exe,
-   in other environment, it defaults to the version of find found
-   in the path"
-  (if (eq system-type 'windows-nt)
-	  (concat (expand-file-name user-emacs-directory) "bin\\find.exe")
-	  "find"))
-
 (defun fiplr-list-files-shell-command (type path ignored-globs)
   "Builds the `find' command to locate all project files & directories.
 
@@ -258,7 +249,7 @@ IGNORED-GLOBS is an alist with keys 'DIRECTORIES and 'FILES."
                          ,(shell-quote-argument ")"))
                        " "))))
     (mapconcat 'identity
-               `(,(fiplr-find-path)
+               `(,"find"
                  ,(shell-quote-argument (directory-file-name path))
                  ,(funcall matcher 'directories)
                  "-prune"

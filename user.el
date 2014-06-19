@@ -1,10 +1,15 @@
 ;; This is where your customizations should live
 
-;; env PATH
+;; env PATH. Adds ~/.emacs.d/bin to the path when usin windows to
+;; gain access to bundled unix tools (find, grep, etc.) 
 (defun set-exec-path-from-shell-PATH ()
-  (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo $PATH'")))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
+  (let* ((path-from-shell (getenv "PATH"))
+		 (new-path (if (eq system-type 'windows-nt)					   
+					   (let* ((bin (concat (expand-file-name user-emacs-directory) "bin\\")))
+						 (concat bin path-separator path-from-shell))
+					 new-path)))
+    (setenv "PATH" new-path)
+    (setq exec-path (split-string new-path path-separator))))
 
 ;; Uncomment the lines below by removing semicolons and play with the
 ;; values in order to set the width (in characters wide) and height
@@ -85,3 +90,6 @@
 
 ;; Guess indent for html files
 (add-hook 'html-mode-hook 'sgml-guess-indent)
+
+;; Set path
+(set-exec-path-from-shell-PATH)
