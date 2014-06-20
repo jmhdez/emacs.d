@@ -7,7 +7,7 @@
 		 (new-path (if (eq system-type 'windows-nt)					   
 					   (let* ((bin (concat (expand-file-name user-emacs-directory) "bin\\")))
 						 (concat bin path-separator path-from-shell))
-					 new-path)))
+					 path-from-shell)))
     (setenv "PATH" new-path)
     (setq exec-path (split-string new-path path-separator))))
 
@@ -96,3 +96,7 @@
 
 ;; Show line numbers
 (global-linum-mode t)
+
+;; Turn of auto-fill
+(auto-fill-mode -1)
+(remove-hook 'text-mode-hook 'turn-on-auto-fill)
