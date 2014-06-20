@@ -11,4 +11,5 @@
 
 (setq mc/cmds-to-run-once
       '(
+		ido-kill-buffer
 		))
