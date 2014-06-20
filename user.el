@@ -61,6 +61,18 @@
 ;; Set UTF-8 as default encoding
 (set-language-environment "UTF-8")
 
+;; Add global key binding to fiplr-find-file
+(global-set-key (kbd "C-x p") 'fiplr-find-file)
+
+;; Guess indent for html files
+(add-hook 'html-mode-hook 'sgml-guess-indent)
+
+;; Set path
+(set-exec-path-from-shell-PATH)
+
+;; Show line numbers
+(global-linum-mode t)
+
 ;; Javascript settings
 
 ;; major-mode
@@ -85,18 +97,3 @@
 ;; Autocomplete braces
 (add-hook 'js2-mode-hook 'electric-pair-mode)
 
-;; Add global key binding to fiplr-find-file
-(global-set-key (kbd "C-x p") 'fiplr-find-file)
-
-;; Guess indent for html files
-(add-hook 'html-mode-hook 'sgml-guess-indent)
-
-;; Set path
-(set-exec-path-from-shell-PATH)
-
-;; Show line numbers
-(global-linum-mode t)
-
-;; Turn of auto-fill
-(auto-fill-mode -1)
-(remove-hook 'text-mode-hook 'turn-on-auto-fill)
