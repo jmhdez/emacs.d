@@ -18,6 +18,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes (quote ("1ce793cf04c7fbb4648c20f079b687ef10d8ee3014422cf67cf08c92fa6dc77c" default)))
+ '(fill-column 999999)
  '(indent-tabs-mode t)
  '(tab-width 4))
 
