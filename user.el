@@ -78,4 +78,4 @@
 (require 'tree-mode)
 (require 'windata)
 (require 'dirtree)
-(global-set-key (kbd "C-o" 'dirtree-show))
+(global-set-key (kbd "C-o") 'dirtree-show)
