@@ -74,3 +74,8 @@
 ;; Show line numbers
 (global-linum-mode t)
 
+;; Load dirtree
+(require 'tree-mode)
+(require 'windata)
+(require 'dirtree)
+(global-set-key (kbd "C-o" 'dirtree-show))
