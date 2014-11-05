@@ -19,7 +19,7 @@
 
 (flycheck-define-checker jsxhint-checker
   "A JSX syntax and style checker based on JSXHint."
-  :command ("jsxhint" source)
+  :command ("jsxhint" (eval (list (file-name-nondirectory (flycheck-save-buffer-to-temp #'flycheck-temp-file-system)))))
   :error-patterns
   ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
   :modes (js2-mode))
