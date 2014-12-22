@@ -79,3 +79,19 @@
 (require 'windata)
 (require 'dirtree)
 (global-set-key (kbd "C-o") 'dirtree-show)
+
+
+;; Utility functions
+
+
+(defun revert-all-buffers ()
+  "Refreshes all open buffers from their respective files."
+  (interactive)
+  (save-some-buffers)
+  (dolist (buf (buffer-list))
+	(with-current-buffer buf
+	  (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
+		(revert-buffer t t t) )))
+  (message "Refreshed open files."))
+
+(global-set-key (kbd "C-c C-r") 'revert-all-buffers)
