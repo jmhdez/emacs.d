@@ -1,1 +1,0 @@
-This folder contains binaries required in windows to use some tools

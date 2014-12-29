@@ -2,6 +2,10 @@
 *#*
 *-history
 .smex-items
+ac-comphist.dat
+cider-history
+projectile.cache
+projectile-bookmarks.eld
 
 places
 eshell
