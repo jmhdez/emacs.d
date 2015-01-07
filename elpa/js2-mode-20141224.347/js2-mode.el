@@ -6779,7 +6779,7 @@ it is considered declared."
         when (and (eq 'block (js2-comment-node-format node))
                   (save-excursion
                     (goto-char (js2-node-abs-pos node))
-                    (looking-at "/\\*global ")))
+                    (looking-at "/\\*[ ]*global ")))
         append (js2-get-jslint-globals-in
                 (match-end 0)
                 (js2-node-abs-end node))))
