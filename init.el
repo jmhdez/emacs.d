@@ -51,7 +51,9 @@
 (blink-cursor-mode 0)
 (show-paren-mode 1)
 
-(set-face-attribute 'default nil :font "Consolas")
+(when (eq system-type 'windows-nt)
+  (set-face-attribute 'default nil :font "Consolas"))
+
 
 ;; some default values
 
