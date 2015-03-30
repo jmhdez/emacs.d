@@ -62,13 +62,6 @@
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
 
-;; use paredit in any lisp-like mode
-
-(add-hook 'lisp-mode-hook 'paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-(add-hook 'scheme-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'paredit-mode)
-
 ;; utility functions
 (load "~/.emacs.d/misc.el");
 
@@ -78,6 +71,14 @@
 (load "~/.emacs.d/lang/clojure.el")
 (load "~/.emacs.d/lang/html.el")
 (load "~/.emacs.d/lang/haskell.el")
+
+;; use paredit in any lisp-like mode
+
+(add-hook 'lisp-mode-hook 'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'scheme-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'paredit-mode)
+
 
 ;; key bindings
 
