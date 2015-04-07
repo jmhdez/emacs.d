@@ -44,3 +44,5 @@
 ;; Reload all buffers from disk
 (global-set-key (kbd "C-c C-r") 'revert-all-buffers)
 
+;; By default, indent on new line
+(global-set-key (kbd "RET") 'newline-and-indent)
