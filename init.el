@@ -64,6 +64,16 @@
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
 
+  ;; Use buffer name and fullpath as window title
+(setq-default frame-title-format "%b (%f)")
+  ;; Changes all yes/no questions to y/n
+(fset 'yes-or-no-p 'y-or-n-p)
+
+  ;; Ensure buffer names are unique
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
+
 ;; utility functions
 (load "~/.emacs.d/misc.el");
 
