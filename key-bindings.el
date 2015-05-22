@@ -46,3 +46,6 @@
 
 ;; By default, indent on new line
 (global-set-key (kbd "RET") 'newline-and-indent)
+
+;; Set undo to a sane shortcut
+(global-set-key (kbd "C-z") 'undo)
