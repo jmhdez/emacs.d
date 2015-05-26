@@ -14,20 +14,24 @@
 (add-hook 'js2-mode-hook
           (lambda () (js2r-add-keybindings-with-prefix "C-c C-m")))
 
-;; JSHint-style checking
+;; Real time syntax checking
 (require 'flycheck)
 
-(flycheck-define-checker jsxhint-checker
-  "A JSX syntax and style checker based on JSXHint."
-  :command ("jsxhint" (eval (list (file-name-nondirectory (flycheck-save-buffer-to-temp #'flycheck-temp-file-system)))))
-  :error-patterns
-  ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
-  :modes (js2-mode))
+;; Remove default jshint flychecker since we are going to use eslint
+(setq-default flycheck-disabled-checkers
+			  (append flycheck-disabled-checkers '(javascript-jshint)))
 
+(setq-default flycheck-disabled-checkers
+			  (append flycheck-disabled-checkers '(json-jsonlist)))
+
+;; Add hook to enable eslint
+;; WARN: libxml2 is required in windows:
+;; http://sourceforge.net/projects/ezwinports/files/
 (add-hook 'js2-mode-hook
           (lambda ()
-			(flycheck-select-checker 'jsxhint-checker)
+			(flycheck-select-checker 'javascript-eslint)
 			(flycheck-mode t)))
+
 
 ;; Autocomplete braces
 (add-hook 'js2-mode-hook 'electric-pair-mode)
