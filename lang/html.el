@@ -1,3 +1,3 @@
 ;; html settings
 
-(add-hook 'html-mode-hook 'sgml-guess-indent)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
