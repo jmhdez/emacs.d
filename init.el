@@ -42,7 +42,7 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'zenburn t)
+(load-theme 'sanityinc-tomorrow-eighties t)
 
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
@@ -53,7 +53,6 @@
 
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil :font "Consolas"))
-
 
 ;; some default values
 

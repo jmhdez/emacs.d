@@ -38,5 +38,4 @@
   ;; top right
   (windmove-left)
   (let ((default-directory "e:/desarrollo/igt.pos.retail-devel/build/debug"))
-	(shell "Retail- Server"))
-)
+	(shell "Retail- Server")))
