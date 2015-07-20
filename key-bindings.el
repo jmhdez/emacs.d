@@ -7,7 +7,7 @@
 (global-set-key (kbd "C-x p") 'helm-projectile)
 
 ;; Use helm instead for some common operations
-(global-set-key (kbd "C-x C-b") 'helm-mini)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
 ;; Completion that uses many different methods to find options.

@@ -35,7 +35,9 @@
 
 ;; helm
 
-(setq helm-split-window-in-side-p t)
+(setq helm-split-window-in-side-p t
+	  helm-buffers-fuzzy-matching t
+	  helm-recentf-fuzzy-match t)
 
 ;; projectile
 
