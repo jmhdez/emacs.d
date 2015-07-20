@@ -6,8 +6,9 @@
 ;; It's all about the project.
 (global-set-key (kbd "C-x p") 'helm-projectile)
 
-;; Use helm instead of default list buffers
+;; Use helm instead for some common operations
 (global-set-key (kbd "C-x C-b") 'helm-mini)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
 ;; Completion that uses many different methods to find options.
 (global-set-key (kbd "C-.") 'hippie-expand)
