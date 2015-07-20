@@ -33,6 +33,10 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 
+;; helm
+
+(setq helm-split-window-in-side-p t)
+
 ;; projectile
 
 (projectile-global-mode)
