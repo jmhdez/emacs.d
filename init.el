@@ -67,6 +67,8 @@
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
 
+(global-visual-line-mode t)
+
   ;; Use buffer name and fullpath as window title
 (setq-default frame-title-format "%b (%f)")
   ;; Changes all yes/no questions to y/n
