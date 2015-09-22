@@ -99,6 +99,24 @@
 (add-hook 'scheme-mode-hook 'paredit-mode)
 (add-hook 'clojure-mode-hook 'paredit-mode)
 
+;; Windows hacks.
+
+;; Autocomplete on shell buffers with \ instead of /
+(defun win-file-name-completion-advice (res)
+  (if (stringp res) (replace-regexp-in-string "/" "\\\\" res) res))
+
+(defun win-command-completion-advice ()
+  (let ((filename (comint-match-partial-filename)))
+    (and filename (not (string-match "\\\\" filename)))))
+
+
+(when (eq system-type 'windows-nt)
+  (advice-add 'comint-completion-file-name-table
+			  :filter-return #'win-file-name-completion-advice))
+
+(when (eq system-type 'windows-nt)
+  (advice-add 'shell-command-completion
+			  :before-while #'win-command-completion-advice))
 
 ;; key bindings
 
