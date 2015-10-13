@@ -46,16 +46,21 @@
 
 ;; visual settings: UI elements, theme, fonts, ...
 
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
 (load-theme 'sanityinc-tomorrow-eighties t)
 
+(add-to-list 'default-frame-alist '(left-fringe . 0))
+(add-to-list 'default-frame-alist '(right-fringe . 0))
+
 (setq inhibit-startup-message t)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 
 (blink-cursor-mode 0)
 (show-paren-mode 1)
+(setq linum-format "%3d ")
 
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil :font "Consolas"))
@@ -71,12 +76,12 @@
 
 (global-visual-line-mode t)
 
-  ;; Use buffer name and fullpath as window title
+;; Use buffer name and fullpath as window title
 (setq-default frame-title-format "%b [%f]")
-  ;; Changes all yes/no questions to y/n
+;; Changes all yes/no questions to y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
-  ;; Ensure buffer names are unique
+;; Ensure buffer names are unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
