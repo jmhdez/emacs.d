@@ -10,6 +10,13 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+;; folder to save all temp files
+(setq emacs-persistence-directory (concat user-emacs-directory "persistence/"))
+(unless (file-exists-p emacs-persistence-directory)
+  (make-directory emacs-persistence-directory t))
+
+(setq ido-save-directory-list-file (concat emacs-persistence-directory "ido-last"))
+
 ;; smex settings
 
 (smex-initialize)
@@ -62,6 +69,9 @@
 (show-paren-mode 1)
 (setq linum-format "%3d ")
 
+(powerline-center-theme)
+
+
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil :font "Consolas"))
 
@@ -84,7 +94,6 @@
 ;; Ensure buffer names are unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
-
 
 ;; utility functions
 (load "~/.emacs.d/misc.el");
