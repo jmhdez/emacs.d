@@ -66,9 +66,9 @@
 
 (setq inhibit-startup-message t)
 
+(setq-default cursor-in-non-selected-windows nil)
 (blink-cursor-mode 0)
 (show-paren-mode 1)
-(setq linum-format "%3d ")
 
 (powerline-center-theme)
 
@@ -80,7 +80,10 @@
 
 (setq backup-directory-alist `(("." . "~/.saves")))
 (set-language-environment "UTF-8")
-(global-linum-mode t)
+
+; Uncomment to show line numbers
+;(global-linum-mode t)
+;(setq linum-format "%3d ")
 
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
