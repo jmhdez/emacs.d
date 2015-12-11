@@ -10,6 +10,19 @@
 		(revert-buffer t t t) )))
   (message "Refreshed open files."))
 
+
+;; Stolen from spacemacs
+;; https://github.com/syl20bnr/spacemacs/blob/master/layers/better-defaults/funcs.el
+(defun backward-kill-word-or-region (&optional arg)
+  "Calls `kill-region' when a region is active and
+`backward-kill-word' otherwise. ARG is passed to
+`backward-kill-word' if no region is active."
+  (interactive "p")
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word arg)))
+
+
 (defun start-agora-shells ()
   "Splits frame in 4 windows and starts a shell in each one"
 

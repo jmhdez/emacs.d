@@ -53,3 +53,6 @@
 
 ;; Set undo to a sane shortcut
 (global-set-key (kbd "C-z") 'undo)
+
+;; Make C-<backspace> delete word or region
+(global-set-key (kbd "C-<backspace>") 'backward-kill-word-or-region)
