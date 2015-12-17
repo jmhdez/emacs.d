@@ -16,6 +16,7 @@
   (make-directory emacs-persistence-directory t))
 
 (setq ido-save-directory-list-file (concat emacs-persistence-directory "ido-last"))
+(setq backup-directory-alist `(("." . "~/.saves")))
 
 ;; smex settings
 
