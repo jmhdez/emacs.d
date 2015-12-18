@@ -52,3 +52,38 @@
   (windmove-left)
   (let ((default-directory "e:/desarrollo/igt.pos.retail-devel/build/debug/"))
 	(shell "Retail- Server")))
+
+(defun distraction-free ()
+  "Creates a distraction free environment to edit the current buffer"
+
+  (interactive)
+
+  (modify-frame-parameters nil `((fullscreen . fullboth)))
+  
+  (delete-other-windows)
+  (split-window-right)
+  (split-window-right)
+
+  (let* ((original (current-buffer))
+		 (total (frame-width))
+		 (center 80)
+		 (left (/ (- total center) 2))
+		 (right (- total center left)))
+
+	;; load a blank buffer in left-window
+	(get-buffer-create "left-padding")
+	(switch-to-buffer "left-padding")
+	(adjust-window-trailing-edge (selected-window) (- left (window-width)) t)
+
+	;; load original buffer in center-window
+	(windmove-right)
+	(switch-to-buffer original)
+	(adjust-window-trailing-edge (selected-window) (- center (window-width)) t)
+
+	;; load a blank buffer in right-window (size is already set)
+	(windmove-right)
+	(get-buffer-create "right-padding")
+	(switch-to-buffer "right-padding")
+
+	;; return to center-window
+		(windmove-left)))
