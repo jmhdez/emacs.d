@@ -33,8 +33,7 @@
   (windmove-down)
   (split-window-right)
 
-  ;; top left
-  (windmove-up)
+  
   (let ((default-directory "e:/desarrollo/igt.pos-devel/build/debug/"))
 	(shell "Rest - Server"))
 
@@ -61,29 +60,13 @@
   (modify-frame-parameters nil `((fullscreen . fullboth)))
   
   (delete-other-windows)
-  (split-window-right)
-  (split-window-right)
 
-  (let* ((original (current-buffer))
-		 (total (frame-width))
-		 (center 80)
-		 (left (/ (- total center) 2))
-		 (right (- total center left)))
+  ;; FIXME: This does only work if frame was already fullscreen
+  
+  (set-fringe-mode
+   (/ (- (frame-pixel-width)
+		 (* 80 (frame-char-width)))
+	  2))
 
-	;; load a blank buffer in left-window
-	(get-buffer-create "left-padding")
-	(switch-to-buffer "left-padding")
-	(adjust-window-trailing-edge (selected-window) (- left (window-width)) t)
-
-	;; load original buffer in center-window
-	(windmove-right)
-	(switch-to-buffer original)
-	(adjust-window-trailing-edge (selected-window) (- center (window-width)) t)
-
-	;; load a blank buffer in right-window (size is already set)
-	(windmove-right)
-	(get-buffer-create "right-padding")
-	(switch-to-buffer "right-padding")
-
-	;; return to center-window
-		(windmove-left)))
+  (let ((bc (face-attribute 'default :background)))
+	(custom-set-faces '(fringe ((t (:background "#2d2d2d")))))))
