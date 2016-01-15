@@ -37,17 +37,14 @@
   (let ((default-directory "e:/desarrollo/igt.pos-devel/build/debug/"))
 	(shell "Rest - Server"))
 
-  ;; top right
   (windmove-right)
   (let ((default-directory "e:/desarrollo/igt.pos-devel/build/debug/"))
 	(shell "Rest - Client"))
 
-  ;; bottom right
-  (windmove-down)
+  (windmove-up)
   (let ((default-directory "e:/desarrollo/igt.pos.retail-devel/build/debug/"))
 	(shell "Retail - Client"))
 
-  ;; top right
   (windmove-left)
   (let ((default-directory "e:/desarrollo/igt.pos.retail-devel/build/debug/"))
 	(shell "Retail- Server")))
