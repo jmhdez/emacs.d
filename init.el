@@ -16,7 +16,11 @@
   (make-directory emacs-persistence-directory t))
 
 (setq ido-save-directory-list-file (concat emacs-persistence-directory "ido-last"))
-(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-directory-alist `(("." . ,(concat emacs-persistence-directory "saves"))))
+(setq auto-save-file-name-transforms `((".*" ,(concat emacs-persistence-directory "auto-saves") t)))
+(setq auto-save-list-file-prefix (concat emacs-persistence-directory "saves"))
+
+(setq create-lockfiles nil)
 
 ;; smex settings
 
@@ -30,7 +34,7 @@
 
 ;; ido settings
 
-(ido-mode t)
+(ido-mode t) 
 (ido-ubiquitous t)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -73,13 +77,10 @@
 
 (powerline-center-theme)
 
-
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil :font "Consolas"))
 
 ;; some default values
-
-(setq backup-directory-alist `(("." . "~/.saves")))
 (set-language-environment "UTF-8")
 
 ; Uncomment to show line numbers
