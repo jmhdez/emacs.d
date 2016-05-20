@@ -55,6 +55,7 @@
 
 (projectile-global-mode)
 (add-to-list 'projectile-globally-ignored-directories "node_modules")
+(setq projectile-indexing-method 'alien)
 
 ;; visual settings: UI elements, theme, fonts, ...
 
