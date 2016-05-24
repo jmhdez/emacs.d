@@ -112,6 +112,7 @@
 (load "~/.emacs.d/lang/html.el")
 (load "~/.emacs.d/lang/haskell.el")
 (load "~/.emacs.d/lang/octave.el")
+(load "~/.emacs.d/lang/typescript.el")
 
 ;; use paredit in any lisp-like mode
 
