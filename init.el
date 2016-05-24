@@ -26,11 +26,9 @@
 
 (smex-initialize)
 
-;; auto-complete settings
+;; company mode
+(add-hook 'after-init-hook 'global-company-mode)
 
-(require 'auto-complete-config) ; No sé por qué este require no lo añade package.el
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(ac-config-default)
 
 ;; ido settings
 
@@ -143,3 +141,5 @@
 ;; key bindings
 
 (load "~/.emacs.d/key-bindings.el")
+
+
