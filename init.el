@@ -26,10 +26,6 @@
 
 (smex-initialize)
 
-;; company mode
-(add-hook 'after-init-hook 'global-company-mode)
-
-
 ;; ido settings
 
 (ido-mode t) 
@@ -82,6 +78,7 @@
 ;; some default values
 (set-language-environment "UTF-8")
 
+
 ; Uncomment to show line numbers
 ;(global-linum-mode t)
 ;(setq linum-format "%3d ")
@@ -118,6 +115,10 @@
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'scheme-mode-hook 'paredit-mode)
 (add-hook 'clojure-mode-hook 'paredit-mode)
+
+;; company mode for autocompletion
+(add-hook 'after-init-hook 'global-company-mode)
+
 
 ;; Windows hacks.
 
