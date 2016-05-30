@@ -75,7 +75,7 @@
 (let ((font-family "Envy Code R"))
   (when (member font-family (font-family-list))
 	(set-face-attribute 'default nil :font font-family)
-	(set-face-attribute 'default nil :height 110)))
+	(set-face-attribute 'default nil :height 100)))
 
 
 (global-linum-mode t)
