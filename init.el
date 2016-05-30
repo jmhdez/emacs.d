@@ -72,10 +72,10 @@
 
 ;; Fonts
 
-(let ((font-family "DejaVu Sans Mono"))
+(let ((font-family "Envy Code R"))
   (when (member font-family (font-family-list))
 	(set-face-attribute 'default nil :font font-family)
-	(set-face-attribute 'default nil :height 100)))
+	(set-face-attribute 'default nil :height 110)))
 
 
 (global-linum-mode t)
@@ -132,6 +132,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 
+
+
 ;; Windows hacks.
 
 ;; Autocomplete on shell buffers with \ instead of /
@@ -150,6 +152,9 @@
 (when (eq system-type 'windows-nt)
   (advice-add 'shell-command-completion
 			  :before-while #'win-command-completion-advice))
+
+
+
 
 ;; key bindings
 
