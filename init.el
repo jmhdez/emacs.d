@@ -77,7 +77,7 @@
 
 ;; some default values
 (set-language-environment "UTF-8")
-
+(delete-selection-mode t)
 
 ; Uncomment to show line numbers
 ;(global-linum-mode t)
