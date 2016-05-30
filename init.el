@@ -61,35 +61,47 @@
 (add-to-list 'load-path "~/.emacs.d/themes")
 (load-theme 'sanityinc-tomorrow-eighties t)
 
-(add-to-list 'default-frame-alist '(left-fringe . 0))
-(add-to-list 'default-frame-alist '(right-fringe . 0))
-
 (setq inhibit-startup-message t)
 
 (setq-default cursor-in-non-selected-windows nil)
+
 (blink-cursor-mode 0)
 (show-paren-mode 1)
 
 (powerline-center-theme)
 
-(when (eq system-type 'windows-nt)
-  (set-face-attribute 'default nil :font "Consolas"))
+;; Fonts
 
-;; some default values
-(set-language-environment "UTF-8")
+(let ((font-family "DejaVu Sans Mono"))
+  (when (member font-family (font-family-list))
+	(set-face-attribute 'default nil :font font-family)
+	(set-face-attribute 'default nil :height 100)))
+
+
+(global-linum-mode t)
+(setq linum-format "%3d")
+(set-face-attribute 'linum nil :background "#333")
+(set-face-attribute 'linum nil :foreground "#5C5C5C")
+
+(add-to-list 'default-frame-alist '(left-fringe . 4))
+(add-to-list 'default-frame-alist '(right-fringe . 0))
+
 (delete-selection-mode t)
-
-; Uncomment to show line numbers
-;(global-linum-mode t)
-;(setq linum-format "%3d ")
 
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
 
 (global-visual-line-mode t)
 
+(global-hl-line-mode t)
+
+;; Default values 
+
+(set-language-environment "UTF-8")
+
 ;; Use buffer name and fullpath as window title
 (setq-default frame-title-format "%b [%f]")
+
 ;; Changes all yes/no questions to y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
