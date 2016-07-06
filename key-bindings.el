@@ -56,3 +56,6 @@
 
 ;; Make C-<backspace> delete word or region
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word-or-region)
+
+;; Toggle hide/show block with HideShow minor mode
+(global-set-key (kbd "C-c t") 'hs-toggle-hiding)
