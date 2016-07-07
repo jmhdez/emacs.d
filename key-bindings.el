@@ -59,3 +59,7 @@
 
 ;; Toggle hide/show block with HideShow minor mode
 (global-set-key (kbd "C-c t") 'hs-toggle-hiding)
+
+;; Navigation with avy
+(global-set-key (kbd "M-s") 'avy-goto-word-1)
+

@@ -1,4 +1,3 @@
-;; sample config
 (add-hook 'typescript-mode-hook
           (lambda ()
             (tide-setup)
@@ -29,3 +28,16 @@
               (setq flycheck-check-syntax-automatically '(save mode-enabled))
               (eldoc-mode +1)
               (company-mode-on))))
+
+
+;; Keybindings for tide
+
+(defun tide-set-keys () 
+  (local-set-key (kbd "C-c C-t r") 'tide-rename-symbol)
+  (local-set-key (kbd "C-c C-t s") 'tide-restart-server)
+  (local-set-key (kbd "C-c C-t f") 'tide-references))
+
+
+(add-hook 'typescript-mode-hook 'tide-set-keys)
+(add-hook 'web-mode-hook 'tide-set-keys)
+
