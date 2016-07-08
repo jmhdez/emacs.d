@@ -16,15 +16,19 @@
 	(company-mode-on)))
 
 
+;; Add web-mode to typescript-tslinst supported modes
+(with-eval-after-load 'flycheck
+  (flycheck-add-mode 'typescript-tslint 'web-mode))
+
 
 ;; Format document before saving with the right options
 ;; More options here: https://github.com/Microsoft/TypeScript/blob/cc58e2d7eb144f0b2ff89e6a6685fb4deaa24fde/src/server/protocol.d.ts#L421-473
 
+(setq tide-format-options
+	  '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t	:placeOpenBraceOnNewLineForFunctions nil :tabSize 4 :convertTabsToSpaces nil))
+
 (add-hook 'before-save-hook 'tide-format-before-save)
 
-(setq tide-format-options
-	  '(:tabSize 4
-		:convertTabsToSpaces nil))
 
 
 ;; Keybindings for tide
