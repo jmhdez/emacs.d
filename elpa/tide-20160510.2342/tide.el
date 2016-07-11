@@ -839,6 +839,10 @@ number."
   "Before save hook to format the buffer before each save."
   (interactive)
   (when (bound-and-true-p tide-mode)
+	;; fuerzo a que se reconfigure el buffer para asegurarme
+	;; de que respeta las opciones de configuración. No debería
+	;; ser necesario, pero la primera vez falla
+	(tide-configure-buffer)
     (tide-format)))
 
 ;;;###autoload

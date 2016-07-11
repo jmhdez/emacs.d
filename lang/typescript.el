@@ -26,9 +26,7 @@
 (setq tide-format-options
 	  '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t	:placeOpenBraceOnNewLineForFunctions nil :tabSize 4 :convertTabsToSpaces nil))
 
-;; Disabling format-before-save since the format-options are ignored
-;; in the first opened buffer: https://github.com/ananthakumaran/tide/issues/42
-;;(add-hook 'before-save-hook 'tide-format-before-save)
+(add-hook 'before-save-hook 'tide-format-before-save)
 
 
 
