@@ -839,16 +839,18 @@ number."
   "Before save hook to format the buffer before each save."
   (interactive)
   (when (bound-and-true-p tide-mode)
-	;; fuerzo a que se reconfigure el buffer para asegurarme
-	;; de que respeta las opciones de configuración. No debería
-	;; ser necesario, pero la primera vez falla
-	(tide-configure-buffer)
     (tide-format)))
 
 ;;;###autoload
 (defun tide-format ()
   "Format the current region or buffer."
   (interactive)
+  
+  ;; HACK: This shouldn't be needed, but the first time a buffer is
+  ;; opened, format options are not honored, so I'm forcing an extra
+  ;; tide-configure-buffer before applying formatting
+  (tide-configure-buffer)
+  
   (if (use-region-p)
       (tide-format-region (region-beginning) (region-end))
     (tide-format-region (point-min) (point-max))))
