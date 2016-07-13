@@ -846,10 +846,6 @@ number."
   "Format the current region or buffer."
   (interactive)
   
-  ;; HACK: This shouldn't be needed, but the first time a buffer is
-  ;; opened, format options are not honored, so I'm forcing an extra
-  ;; tide-configure-buffer before applying formatting
-  (tide-configure-buffer)
   
   (if (use-region-p)
       (tide-format-region (region-beginning) (region-end))
@@ -907,8 +903,8 @@ number."
 
   ;; Call configure command right away if called interactively, all
   ;; the local variables should be set by this time.
-  (when (called-interactively-p 'interactive)
-    (tide-configure-buffer)))
+   
+  (tide-configure-buffer))
 
 ;;;###autoload
 (define-minor-mode tide-mode
