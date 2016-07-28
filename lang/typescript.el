@@ -8,10 +8,11 @@
 (add-hook 'web-mode-hook 'setup-tide-on-web-mode)
 
 (defun setup-tide-on-web-mode ()
-  (when (member (file-name-extension buffer-file-name) '("ts" "tsx"))
+  (when (member (file-name-extension (or buffer-file-name "")) '("ts" "tsx"))
 	(tide-setup)
 	(flycheck-mode +1)
 	(setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
+	(setq web-mode-auto-quote-style 2) ; Use single quote
 	(eldoc-mode +1)
 	(company-mode-on)))
 
