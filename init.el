@@ -109,6 +109,9 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
+;; Enable global-auto-revert-mode
+(global-auto-revert-mode t)
+
 ;; utility functions
 (load "~/.emacs.d/misc.el");
 
@@ -151,8 +154,6 @@
 (when (eq system-type 'windows-nt)
   (advice-add 'shell-command-completion
 			  :before-while #'win-command-completion-advice))
-
-
 
 
 ;; key bindings
