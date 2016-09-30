@@ -1,3 +1,7 @@
+;; Disable C-x C-c as save-buffers-kill-terminal
+(global-unset-key (kbd "C-x C-c"))
+
+
 ;; Completion on M-x
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -9,6 +13,7 @@
 ;; Use helm instead for some common operations
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "M-<insert>") 'helm-show-kill-ring)
 
 ;; Completion that uses many different methods to find options.
 (global-set-key (kbd "C-.") 'hippie-expand)
@@ -58,7 +63,7 @@
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word-or-region)
 
 ;; Toggle hide/show block with HideShow minor mode
-(global-set-key (kbd "C-c t") 'hs-toggle-hiding)
+(global-set-key (kbd "C-c C-t") 'hs-toggle-hiding)
 
 ;; Navigation with avy
 (global-set-key (kbd "M-s") 'avy-goto-word-1)

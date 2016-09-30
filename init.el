@@ -72,10 +72,11 @@
 
 ;; Fonts
 
-(let ((font-family "Envy Code R"))
+(let ((font-family "Monaco"))
   (when (member font-family (font-family-list))
+	(setq-default line-spacing 1)
 	(set-face-attribute 'default nil :font font-family)
-	(set-face-attribute 'default nil :height 100)))
+	(set-face-attribute 'default nil :height 90)))
 
 
 (global-linum-mode t)
