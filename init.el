@@ -70,6 +70,11 @@
 
 (powerline-center-theme)
 
+;; neotree
+
+(setq neo-theme 'arrow)
+(setq neo-window-width 35)
+
 ;; Fonts
 
 (let ((font-family "Monaco"))
