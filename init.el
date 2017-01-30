@@ -61,14 +61,15 @@
 (add-to-list 'load-path "~/.emacs.d/themes")
 (load-theme 'sanityinc-tomorrow-eighties t)
 
+(powerline-center-theme)
+(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+
 (setq inhibit-startup-message t)
 
 (setq-default cursor-in-non-selected-windows nil)
 
 (blink-cursor-mode 0)
 (show-paren-mode 1)
-
-(powerline-center-theme)
 
 ;; neotree
 
@@ -165,3 +166,23 @@
 ;; key bindings
 
 (load "~/.emacs.d/key-bindings.el")
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+;; Configuración de fuentes para flycheck-color-mode-line
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flycheck-color-mode-line-error-face ((t (:background "firebrick" :weight normal))))
+ '(flycheck-color-mode-line-info-face ((t (:inherit flycheck-fringe-info :background "dark olive green" :weight normal))))
+ '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "DarkGoldenrod4" :weight normal))))
+ )

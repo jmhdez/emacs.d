@@ -182,6 +182,9 @@ names to which it refers are bound."
       (flymake-warnline (:underline (:style wave :color ,orange) :background ,background))
       (flymake-errline (:underline (:style wave :color ,red) :background ,background))
 
+      ;; Flyspell
+      (flyspell-incorrect (:underline (:style wave :color ,red)))
+
       ;; Clojure errors
       (clojure-test-failure-face (:background nil :inherit flymake-warnline))
       (clojure-test-error-face (:background nil :inherit flymake-errline))
@@ -241,12 +244,17 @@ names to which it refers are bound."
       (flx-highlight-face (:inherit nil :foreground ,yellow :weight bold :underline nil))
 
       ;; Ivy
+      (ivy-action (:foreground ,purple))
       (ivy-confirm-face (:foreground ,green))
-      (ivy-current-match (:background ,contrast-bg))
-      (ivy-match-required-face (:foreground ,red))
-      (ivy-remote (:foreground ,blue))
-      (ivy-subdir (:foreground ,orange))
-      (ivy-virtual (:foreground ,purple))
+      (ivy-current-match (:foreground ,green :inherit highlight :underline t))
+      (ivy-match-required-face (:inherit ido-indicator))
+      (ivy-remote (:foreground ,orange))
+      (ivy-subdir (:inherit ido-subdir))
+      (ivy-virtual (:inherit ido-virtual))
+      (ivy-minibuffer-match-face-1 (:foreground ,aqua))
+      (ivy-minibuffer-match-face-2 (:foreground ,yellow))
+      (ivy-minibuffer-match-face-3 (:foreground ,blue))
+      (ivy-minibuffer-match-face-4 (:foreground ,orange))
 
       ;; which-function
       (which-func (:foreground ,blue :background nil :weight bold))
@@ -308,6 +316,7 @@ names to which it refers are bound."
       (slime-repl-prompt-face (:underline nil :weight bold :foreground ,purple))
       (slime-repl-result-face (:foreground ,green))
       (slime-repl-output-face (:foreground ,blue :background ,background))
+      (slime-repl-inputed-output-face (:foreground ,comment))
 
       (csv-separator-face (:foreground ,orange))
 
@@ -347,8 +356,9 @@ names to which it refers are bound."
       (diredp-deletion-file-name (:inherit error))
       (diredp-date-time (:foreground ,blue))
       (diredp-dir-heading (:foreground ,green :weight bold))
+      (diredp-dir-name (:foreground ,aqua))
       (diredp-dir-priv (:foreground ,aqua :background nil))
-      (diredp-exec-priv (:foreground ,blue :background nil))
+      (diredp-exec-priv (:foreground ,orange :background nil))
       (diredp-executable-tag (:foreground ,red :background nil))
       (diredp-file-name (:foreground ,yellow))
       (diredp-file-suffix (:foreground ,green))
@@ -367,6 +377,8 @@ names to which it refers are bound."
       (diredp-write-priv (:foreground ,yellow :background nil))
 
       ;; Magit
+      (magit-blame-heading (:background ,highlight :foreground ,orange))
+      (magit-blame-date (:foreground ,red))
       (magit-header-line (:inherit nil :weight bold))
       (magit-dimmed (:foreground ,comment))
       (magit-hash (:foreground ,comment))
@@ -441,6 +453,8 @@ names to which it refers are bound."
       (helm-buffer-not-saved (:foreground ,orange))
       (helm-buffer-process (:foreground ,aqua))
       (helm-buffer-directory (:foreground ,blue))
+      (helm-ff-dotted-directory (:foreground ,comment))
+      (helm-ff-dotted-symlink-directory (:foreground ,comment))
       (helm-ff-directory (:foreground ,aqua))
       (helm-candidate-number (:foreground ,red))
       (helm-match (:inherit match))
@@ -481,7 +495,7 @@ names to which it refers are bound."
       (org-hide (:foreground ,background :background ,background))
       (org-link (:foreground ,blue :underline t))
       (org-scheduled (:foreground ,green))
-      (org-scheduled-previously (:foreground ,orange))
+      (org-scheduled-previously (:foreground ,aqua))
       (org-scheduled-today (:foreground ,green))
       (org-special-keyword (:foreground ,orange))
       (org-table (:foreground ,purple))
@@ -494,7 +508,7 @@ names to which it refers are bound."
 
       ;; hl-line-mode
       (hl-sexp-face (:background ,contrast-bg))
-      (highlight-symbol-face (:inherit isearch-lazy-highlight-face))
+      (highlight-symbol-face (:inherit highlight))
       (highlight-80+ (:background ,contrast-bg))
 
       ;; Hydra
