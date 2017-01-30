@@ -35,3 +35,7 @@
 
 ;; Autocomplete braces
 (add-hook 'js2-mode-hook 'electric-pair-mode)
+
+;; Add support for mocha tests
+(setq mocha-command ".\\node_modules\\.bin\\mocha.cmd")
+(setq mocha-which-node "")

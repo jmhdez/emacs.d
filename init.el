@@ -165,5 +165,3 @@
 ;; key bindings
 
 (load "~/.emacs.d/key-bindings.el")
-
-

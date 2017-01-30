@@ -5,7 +5,7 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
 
-(add-hook 'web-mode-hook 'setup-tide-on-web-mode)
+(add-hook 'web-mode-hook 'setup-tide-on-web-mode )
 
 (defun setup-tide-on-web-mode ()
   (when (member (file-name-extension (or buffer-file-name "")) '("ts" "tsx"))
@@ -20,6 +20,14 @@
 ;; Add web-mode to typescript-tslinst supported modes
 (with-eval-after-load 'flycheck
   (flycheck-add-mode 'typescript-tslint 'web-mode))
+
+;; Ensure both tide an tslint checkers are used
+;; https://github.com/ananthakumaran/tide/issues/95
+(with-eval-after-load 'flycheck
+  (with-eval-after-load 'tide
+	(flycheck-add-next-checker 'tsx-tide '(warning . typescript-tslint) 'append)
+	(flycheck-add-mode 'typescript-tslint 'web-mode)))
+
 
 ;; Format document before saving with the right options
 ;; More options here: https://github.com/Microsoft/TypeScript/blob/cc58e2d7eb144f0b2ff89e6a6685fb4deaa24fde/src/server/protocol.d.ts#L421-473
