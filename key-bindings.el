@@ -26,9 +26,10 @@
 
 ;; Replace
 (global-set-key (kbd "C-x h") 'replace-string)
+(global-set-key (kbd "C-x C-h") 'rgrep)
 
 ;; Jump to a definition in the current file. (Protip: this is awesome.)
-(global-set-key (kbd "C-x C-i") 'imenu)
+(global-set-key (kbd "C-x C-i") 'helm-semantic-or-imenu)
 
 ;; File finding
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
