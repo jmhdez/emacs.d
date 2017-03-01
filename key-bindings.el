@@ -1,7 +1,6 @@
 ;; Disable C-x C-c as save-buffers-kill-terminal
 (global-unset-key (kbd "C-x C-c"))
 
-
 ;; Completion on M-x
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -24,12 +23,13 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
-;; Replace
+;; Search, replace and code navigation
 (global-set-key (kbd "C-x h") 'replace-string)
 (global-set-key (kbd "C-x C-h") 'rgrep)
-
 ;; Jump to a definition in the current file. (Protip: this is awesome.)
 (global-set-key (kbd "C-x C-i") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-x C-o") 'helm-occur)
+
 
 ;; File finding
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
@@ -72,3 +72,7 @@
 ;; Navigation with avy
 (global-set-key (kbd "M-s") 'avy-goto-word-1)
 
+;; Toggle neotree using custom function to follow projectile project root
+(global-set-key [f8] 'neotree-project-dir)
+;; find file in neotree
+(global-set-key (kbd "M-L") (lambda () (interactive) (neotree-find (buffer-file-name))))
