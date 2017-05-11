@@ -157,6 +157,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
+(setq company-idle-delay 0.1)
 
 ;; Windows hacks.
 
@@ -188,7 +189,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(package-selected-packages
+   (quote
+	(company-restclient restclient-helm web-mode uuidgen tide smex restclient rainbow-delimiters powerline neotree mocha less-css-mode js2-refactor ido-ubiquitous helm-projectile haskell-mode git-rebase-mode git-commit-mode flycheck-color-mode-line company color-theme-sanityinc-tomorrow clj-refactor avy auto-complete ac-js2))))
 
 
 ;; Configuración de fuentes para flycheck-color-mode-line
@@ -199,5 +202,4 @@
  ;; If there is more than one, they won't work right.
  '(flycheck-color-mode-line-error-face ((t (:background "firebrick" :weight normal))))
  '(flycheck-color-mode-line-info-face ((t (:inherit flycheck-fringe-info :background "dark olive green" :weight normal))))
- '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "DarkGoldenrod4" :weight normal))))
- )
+ '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "DarkGoldenrod4" :weight normal)))))

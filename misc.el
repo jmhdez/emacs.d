@@ -32,22 +32,25 @@
   (split-window-right)
   (windmove-down)
   (split-window-right)
-
   
-  (let ((default-directory "e:/desarrollo/igt.pos-devel/build/debug/"))
-	(shell "Rest - Server"))
-
-  (windmove-right)
   (let ((default-directory "e:/desarrollo/igt.pos-devel/build/debug/"))
 	(shell "Rest - Client"))
 
-  (windmove-up)
+  (windmove-left)
+
   (let ((default-directory "e:/desarrollo/igt.pos.retail-devel/build/debug/"))
 	(shell "Retail - Client"))
 
-  (windmove-left)
+  (windmove-down)
+  
   (let ((default-directory "e:/desarrollo/igt.pos.retail-devel/build/debug/"))
-	(shell "Retail- Server")))
+	(shell "Retail- Server"))
+
+  (windmove-right)
+  
+  (let ((default-directory "e:/desarrollo/igt.pos-devel/build/debug/"))
+	(shell "Rest - Server")))
+
 
 (defun distraction-free ()
   "Creates a distraction free environment to edit the current buffer"
