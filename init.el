@@ -57,25 +57,54 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
-(setq solarized-use-less-bold t)
-(setq solarized-high-contrast-mode-line t)
-(load-theme 'solarized-dark t)
-(set-face-attribute 'linum nil :foreground "#23454F")
-
-(powerline-center-theme)
-(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
-
 (setq inhibit-startup-message t)
-
 (setq-default cursor-in-non-selected-windows nil)
 
 (blink-cursor-mode 0)
 (show-paren-mode 1)
 
-;; neotree
+;; theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes")
+(setq solarized-use-less-bold t)
+(setq solarized-high-contrast-mode-line t)
+(load-theme 'solarized-dark t)
 
+;; linum-mode (face matches current theme)
+(global-linum-mode t)
+(setq linum-format "%3d")
+(set-face-attribute 'linum nil :foreground "#23454F")
+
+;; powerline settings
+(setq powerline-default-separator 'brace)
+(powerline-center-theme)
+
+(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+
+
+;; Fonts
+(let ((font-family "Monaco"))
+  (when (member font-family (font-family-list))
+	(setq-default line-spacing 1)
+	(set-face-attribute 'default nil :font font-family)
+	(set-face-attribute 'default nil :height 105)))
+
+
+(add-to-list 'default-frame-alist '(left-fringe . 4))
+(add-to-list 'default-frame-alist '(right-fringe . 0))
+
+(delete-selection-mode t)
+
+(setq-default indents-tab-mode t)
+(setq-default tab-width 4)
+
+(global-visual-line-mode t)
+
+(global-hl-line-mode t)
+
+
+
+;; neotree
 (setq neo-theme 'ascii)
 (setq neo-window-width 35)
 ;; show current file when opened
@@ -94,30 +123,6 @@
 			  (neotree-find file-name)))
 	  (message "Could not find git project root."))))
 
-;; Fonts
-
-(let ((font-family "Monaco"))
-  (when (member font-family (font-family-list))
-	(setq-default line-spacing 1)
-	(set-face-attribute 'default nil :font font-family)
-	(set-face-attribute 'default nil :height 105)))
-
-
-(global-linum-mode t)
-(setq linum-format "%3d")
-
-(add-to-list 'default-frame-alist '(left-fringe . 4))
-(add-to-list 'default-frame-alist '(right-fringe . 0))
-
-(delete-selection-mode t)
-
-
-(setq-default indents-tab-mode t)
-(setq-default tab-width 4)
-
-(global-visual-line-mode t)
-
-(global-hl-line-mode t)
 
 ;; undo-tree
 (global-undo-tree-mode t)
@@ -209,6 +214,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flycheck-color-mode-line-error-face ((t (:background "firebrick" :weight normal))))
- '(flycheck-color-mode-line-info-face ((t (:inherit flycheck-fringe-info :background "dark olive green" :weight normal))))
- '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "DarkGoldenrod4" :weight normal)))))
+ '(flycheck-color-mode-line-error-face ((t (:foreground "#DC322F" :weight normal))))
+ '(flycheck-color-mode-line-info-face ((t (:inherit flycheck-fringe-info :foreground "#2AA198" :weight normal))))
+ '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "#839496" :foreground "#CB4B16" :weight normal)))))
