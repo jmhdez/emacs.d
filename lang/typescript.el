@@ -46,7 +46,8 @@
   (local-set-key (kbd "C-c C-t s") 'tide-restart-server)
   (local-set-key (kbd "C-c C-t f") 'tide-references)
   (local-set-key (kbd "C-c C-t e") 'tide-project-errors)
-  (local-set-key (kbd "C-c C-t x") 'tide-fix))
+  (local-set-key (kbd "C-c C-t x") 'tide-fix)
+  (local-set-key (kbd "M-RET") 'tide-fix))
 
 (add-hook 'typescript-mode-hook 'tide-set-keys)
 (add-hook 'web-mode-hook 'tide-set-keys)
