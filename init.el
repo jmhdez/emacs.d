@@ -69,6 +69,9 @@
 (setq solarized-use-less-bold t)
 (setq solarized-high-contrast-mode-line t)
 (load-theme 'solarized-dark t)
+(custom-theme-set-faces
+ 'solarized-dark
+ '(helm-selection ((t (:background "#073642" :foreground "#b58900")))))
 
 ;; linum-mode (face matches current theme)
 (global-linum-mode t)
