@@ -61,7 +61,8 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; Set undo to a sane shortcut
-(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "C-S-z") 'undo-tree-redo)
 
 ;; Make C-<backspace> delete word or region
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word-or-region)
