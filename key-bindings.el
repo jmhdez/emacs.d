@@ -29,6 +29,8 @@
 ;; Jump to a definition in the current file. (Protip: this is awesome.)
 (global-set-key (kbd "C-x C-i") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-x C-o") 'helm-occur)
+;; I barely use C-x o to switch buffers, and I'm always getting the helm-occur keybinding wrong so..
+(global-set-key (kbd "C-x o") 'helm-occur)
 
 
 ;; File finding
