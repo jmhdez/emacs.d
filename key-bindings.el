@@ -32,6 +32,9 @@
 ;; I barely use C-x o to switch buffers, and I'm always getting the helm-occur keybinding wrong so..
 (global-set-key (kbd "C-x o") 'helm-occur)
 
+;; Multicursor editing
+(global-set-key (kbd "C-S-d") 'mc/mark-next-like-this-word)
+(global-set-key (kbd "C-'") 'mc-hide-unmatched-lines-mode)
 
 ;; File finding
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)

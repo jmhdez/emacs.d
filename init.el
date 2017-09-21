@@ -57,6 +57,9 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 
+(setq-default truncate-lines nil
+			  truncate-partial-width-windows nil)
+
 (setq inhibit-startup-message t)
 (setq-default cursor-in-non-selected-windows nil)
 
@@ -86,9 +89,9 @@
 
 
 ;; Fonts
-(let ((font-family "Monaco"))
+(let ((font-family "Hack"))
   (when (member font-family (font-family-list))
-	(setq-default line-spacing 1)
+	(setq-default line-spacing 5)
 	(set-face-attribute 'default nil :font font-family)
 	(set-face-attribute 'default nil :height 105)))
 
