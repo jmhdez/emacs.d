@@ -1,6 +1,10 @@
 ;; Disable C-x C-c as save-buffers-kill-terminal
 (global-unset-key (kbd "C-x C-c"))
 
+;; Disable C-Up & C-down as backward & forward paragraph
+(global-unset-key (kbd "C-<up>"))
+(global-unset-key (kbd "C-<down>"))
+
 ;; Completion on M-x
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
