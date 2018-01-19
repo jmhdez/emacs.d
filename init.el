@@ -139,7 +139,8 @@
 (set-language-environment "UTF-8")
 
 ;; Use buffer name and fullpath as window title
-(setq-default frame-title-format "%b [%f]")
+(setq-default frame-title-format
+			  '((:eval (if (buffer-file-name) "%b -- %f" "%b"))))
 
 ;; Changes all yes/no questions to y/n
 (fset 'yes-or-no-p 'y-or-n-p)
