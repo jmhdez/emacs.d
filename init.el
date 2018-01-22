@@ -154,6 +154,7 @@
 
 ;; utility functions
 (load "~/.emacs.d/misc.el");
+(load "~/.emacs.d/agora.el")
 
 ;; language customizations
 
