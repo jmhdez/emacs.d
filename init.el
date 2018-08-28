@@ -105,7 +105,9 @@
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
 
-(global-visual-line-mode t)
+;; Do NOT truncate lines. I'm sure this is not the recommended way
+;; to do it, but I don't know how to make it work
+(add-hook 'find-file-hook (lambda () (toggle-truncate-lines t)))
 
 (global-hl-line-mode t)
 
@@ -176,7 +178,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
-(setq company-idle-delay 0.1)
+(setq company-idle-delay 0.5)
 
 
 ;; Windows hacks.
@@ -225,4 +227,4 @@
  ;; If there is more than one, they won't work right.
  '(flycheck-color-mode-line-error-face ((t (:foreground "#DC322F" :weight normal))))
  '(flycheck-color-mode-line-info-face ((t (:inherit flycheck-fringe-info :foreground "#2AA198" :weight normal))))
- '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "#839496" :foreground "#CB4B16" :weight normal)))))
+'(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "#839496" :foreground "#CB4B16" :weight normal)))))

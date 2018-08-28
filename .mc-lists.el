@@ -9,6 +9,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+		js2-mode-show-node
 		mouse-set-region
 		smex
 		))
