@@ -216,7 +216,7 @@
 	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1ce793cf04c7fbb4648c20f079b687ef10d8ee3014422cf67cf08c92fa6dc77c" "9bc6cf0c6a6c4b06b929e8cd9952478fa0924a4c727dacbc80c3949fc0734fb9" default)))
  '(package-selected-packages
    (quote
-	(esup 0blayout twittering-mode solarized-theme undo-tree company-restclient restclient-helm web-mode uuidgen tide smex restclient rainbow-delimiters powerline neotree mocha less-css-mode js2-refactor ido-ubiquitous helm-projectile haskell-mode git-rebase-mode git-commit-mode flycheck-color-mode-line company color-theme-sanityinc-tomorrow clj-refactor avy auto-complete ac-js2))))
+	(rjsx-mode esup 0blayout twittering-mode solarized-theme undo-tree company-restclient restclient-helm web-mode uuidgen tide smex restclient rainbow-delimiters powerline neotree mocha less-css-mode js2-refactor ido-ubiquitous helm-projectile haskell-mode git-rebase-mode git-commit-mode flycheck-color-mode-line company color-theme-sanityinc-tomorrow clj-refactor avy auto-complete ac-js2))))
 
 
 ;; Configuración de fuentes para flycheck-color-mode-line
@@ -227,4 +227,4 @@
  ;; If there is more than one, they won't work right.
  '(flycheck-color-mode-line-error-face ((t (:foreground "#DC322F" :weight normal))))
  '(flycheck-color-mode-line-info-face ((t (:inherit flycheck-fringe-info :foreground "#2AA198" :weight normal))))
-'(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "#839496" :foreground "#CB4B16" :weight normal)))))
+ '(flycheck-color-mode-line-warning-face ((t (:inherit flycheck-fringe-warning :background "#839496" :foreground "#CB4B16" :weight normal)))))
