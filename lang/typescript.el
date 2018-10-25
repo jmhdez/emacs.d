@@ -37,8 +37,6 @@
 
 (add-hook 'before-save-hook 'tide-format-before-save)
 
-
-
 ;; Keybindings for tide
 
 (defun tide-set-keys () 
@@ -52,3 +50,5 @@
 (add-hook 'typescript-mode-hook 'tide-set-keys)
 (add-hook 'web-mode-hook 'tide-set-keys)
 
+;; Detect compilation errors in compile-mode
+(add-to-list 'compilation-error-regexp-alist '("^ERROR in \\(.*\\)(\\([0-9]+\\),\\([0-9]+\\)):$" 1 2))

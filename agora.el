@@ -6,7 +6,6 @@
 (setq ag:retail-base-dir "e:/desarrollo/igt.pos.retail-devel/")
 
 
-
 (defun _ag:start-4-shells (tl-title tl-path tr-title tr-path bl-title bl-path br-title br-path)
   "Splits frame in 4 windows and starts a shell in each one using specified title and path for each one (tl = top-left ... br = bottom-right)"
 
@@ -67,5 +66,13 @@
    "retail:aux" (concat (file-name-as-directory ag:retail-base-dir) ""))
   (ag:powerline-retail))
 
+(defun ag:admin-build ()
+  "Starts a shell to build web admin"
+  (interactive)
+  (shell "*build webadmin*")
+  (compilation-shell-minor-mode)
+  (toggle-truncate-lines)
+  (insert "npm run dev")
+  (comint-send-input nil t))
 
 
