@@ -50,6 +50,9 @@
 (projectile-global-mode)
 (add-to-list 'projectile-globally-ignored-directories "node_modules")
 (setq projectile-indexing-method 'alien)
+;; I don't why this is stopped working with default command in windows. I have added
+;; the removal of \r and it works again.
+(setq projectile-svn-command "svn list -R . | grep -v '$/' | tr -d '\\r' | tr '\\n' '\\0")
 
 ;; visual settings: UI elements, theme, fonts, ...
 
