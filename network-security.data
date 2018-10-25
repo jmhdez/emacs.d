@@ -1,3 +1,4 @@
 (
+ (:id "sha1:aa0c67570b1db59042b1a8a1b1050b896741e8ec" :fingerprint "sha1:72:05:3d:1b:ce:86:ec:77:a6:56:9d:9b:41:30:44:f5:1d:7f:e0:91" :host "agorapos.com:443" :conditions (:no-host-match))
  (:id "sha1:85457c729378cc93c732b6a3941c8e4f9c2e60f3" :fingerprint "sha1:ab:a6:d7:6a:b3:d3:63:fa:19:0d:65:41:60:23:6e:ef:d3:2a:46:dc" :host "marmalade-repo.org:443" :conditions (:expired :invalid))
 )
