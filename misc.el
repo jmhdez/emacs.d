@@ -43,6 +43,6 @@
   (interactive)
   (let ((explicit-shell-file-name "C:/Program Files/git/bin/bash.exe"))
     (call-interactively 'shell)
-    (insert "export PS1='\\[\\033[32m\\]\\u@\\h \\[\\033[33m\\]\\w\\[\\033[36m\\]`__git_ps1`\\[\\033[0m\\]\\n$ '")
+    (insert "export PS1='\\[\\033[32m\\]\\[\\033[33m\\]\\w\\[\\033[36m\\]`__git_ps1`\\[\\033[0m\\]\\n$ '")
     (comint-send-input nil t)
 	(rename-buffer "*git*")))
