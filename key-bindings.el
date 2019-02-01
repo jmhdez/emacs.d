@@ -86,3 +86,6 @@
 (global-set-key [f8] 'neotree-project-dir)
 ;; find file in neotree
 (global-set-key (kbd "M-L") (lambda () (interactive) (neotree-find (buffer-file-name))))
+
+;; Make window dedicated to avoid opening other buffers in it
+(global-set-key (kbd "C-c t") 'toggle-window-dedicated)

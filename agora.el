@@ -2,8 +2,8 @@
 
 
 ;; Base folders for restaurant and retail development
-(setq ag:rest-base-dir "e:/desarrollo/igt.pos-devel/")
-(setq ag:retail-base-dir "e:/desarrollo/igt.pos.retail-devel/")
+(setq ag:rest-base-dir "e:/desarrollo/igt-pos-rest/")
+(setq ag:retail-base-dir "e:/desarrollo/igt-pos-retail/")
 
 
 (defun _ag:start-4-shells (tl-title tl-path tr-title tr-path bl-title bl-path br-title br-path)
