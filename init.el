@@ -87,7 +87,7 @@
 (minions-mode 1)
 
 ;; linum-mode
-(global-linum-mode) t
+(global-linum-mode t)
 (setq linum-format "%3d")
 
 ;; Fonts
