@@ -34,17 +34,17 @@
 
   (windmove-up))
 
-(defun ag:powerline-rest ()
+(defun ag:doomline-rest ()
   "Set powerline colors for Ágora Restaurant"
   (interactive)
-  (set-face-attribute 'powerline-active2 nil :background "light sky blue")
-  (set-face-attribute 'powerline-inactive2 nil :background "DodgerBlue4"))
+  (set-face-attribute 'mode-line nil :background "light sky blue")
+  (set-face-attribute 'mode-line-inactive nil :background "DodgerBlue4"))
 
-(defun ag:powerline-retail ()
+(defun ag:doomline-retail ()
   "Set powerline colors for Ágora Retail"
   (interactive)
-  (set-face-attribute 'powerline-active2 nil :background "plum")
-  (set-face-attribute 'powerline-inactive2 nil :background "maroon4"))
+  (set-face-attribute 'mode-line nil :background "plum")
+  (set-face-attribute 'mode-line-inactive nil :background "maroon4"))
 
 (defun ag:start-rest ()
   "Setup shells for Ágora Restaurant"
@@ -54,7 +54,7 @@
    "rest:web-admin" (concat (file-name-as-directory ag:rest-base-dir) "src/WebAdmin") 
    "rest:client" (concat (file-name-as-directory ag:rest-base-dir) "build/debug")
    "rest:aux" (concat (file-name-as-directory ag:rest-base-dir) ""))
-  (ag:powerline-rest))
+  (ag:doomline-rest))
 
 (defun ag:start-retail ()
   "Setup shells for Ágora Retail"
@@ -64,7 +64,7 @@
    "retail:web-admin" (concat (file-name-as-directory ag:retail-base-dir) "src/WebAdmin") 
    "retail:client" (concat (file-name-as-directory ag:retail-base-dir) "build/debug")
    "retail:aux" (concat (file-name-as-directory ag:retail-base-dir) ""))
-  (ag:powerline-retail))
+  (ag:doomline-retail))
 
 (defun ag:admin-build ()
   "Starts a shell to build web admin"
