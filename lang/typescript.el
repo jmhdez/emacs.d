@@ -35,6 +35,11 @@
 (setq tide-format-options
 	  '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t	:placeOpenBraceOnNewLineForFunctions nil :tabSize 4 :convertTabsToSpaces nil))
 
+(setq tide-user-preferences
+	  '(:quotePreference "single"
+		:includeCompletionsForModuleExports t
+		:includeCompletionsWithInsertText t))
+
 (add-hook 'before-save-hook 'tide-format-before-save)
 
 ;; Keybindings for tide
