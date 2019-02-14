@@ -18,10 +18,6 @@
 	(company-mode-on)))
 
 
-;; Add web-mode to typescript-tslinst supported modes
-(with-eval-after-load 'flycheck
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
-
 ;; Ensure both tide an tslint checkers are used
 ;; https://github.com/ananthakumaran/tide/issues/95
 (with-eval-after-load 'flycheck
