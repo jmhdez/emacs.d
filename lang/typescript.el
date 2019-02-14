@@ -11,6 +11,7 @@
   (when (member (file-name-extension (or buffer-file-name "")) '("ts" "tsx"))
 	(tide-setup)
 	(flycheck-mode +1)
+	(tide-hl-identifier-mode +1)
 	(setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
 	(setq web-mode-auto-quote-style 2) ; Use single quote
 	(eldoc-mode +1)
