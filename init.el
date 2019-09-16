@@ -67,6 +67,7 @@
 (setq inhibit-startup-message t)
 (setq-default cursor-in-non-selected-windows nil)
 
+(setq-default cursor-type 'bar)
 (blink-cursor-mode 0)
 (show-paren-mode 1)
 
