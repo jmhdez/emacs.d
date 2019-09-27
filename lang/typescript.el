@@ -53,4 +53,4 @@
 (add-hook 'web-mode-hook 'tide-set-keys)
 
 ;; Detect compilation errors in compile-mode
-(add-to-list 'compilation-error-regexp-alist '("^ERROR in \\(.*\\)(\\([0-9]+\\),\\([0-9]+\\)):$" 1 2))
+(add-to-list 'compilation-error-regexp-alist '("ERROR in \\(.*\\)(\\([0-9]+\\),\\([0-9]+\\)):$" 1 2))
