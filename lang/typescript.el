@@ -1,6 +1,8 @@
 ;; Use web-mode for both ts and tsx files
 ;; (I prefer its syntax highlighting instead of typescript-mode)
 (require 'web-mode)
+(require 'flycheck)
+(require 'tide)
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
@@ -8,22 +10,27 @@
 (add-hook 'web-mode-hook 'setup-tide-on-web-mode )
 
 (defun setup-tide-on-web-mode ()
-  (when (member (file-name-extension (or buffer-file-name "")) '("ts" "tsx"))
-	(tide-setup)
-	(flycheck-mode +1)
-	(tide-hl-identifier-mode +1)
-	(setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
-	(setq web-mode-auto-quote-style 2) ; Use single quote
-	(eldoc-mode +1)
-	(company-mode-on)))
+  (let ((extension (file-name-extension (or buffer-file-name ""))))
+	(when (member extension '("ts" "tsx"))
+	  (tide-setup)
+	  (flycheck-mode +1)
+	  (tide-hl-identifier-mode +1)
+	  (setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
+	  (setq web-mode-auto-quote-style 2) ; Use single quote
+	  (eldoc-mode +1)
+	  ;; Explicitly set checkers because flycheck is selecting the wrong checker (eslint)
+	  ;; when extension is ts
+	  (if (string-equal extension "ts")
+		  (flycheck-select-checker 'typescript-tslint))
+	  (if (string-equal extension "tsx")
+		  (flycheck-select-checker 'tsx-tide))
+	  (company-mode-on))))
 
 
 ;; Ensure both tide an tslint checkers are used
 ;; https://github.com/ananthakumaran/tide/issues/95
-(with-eval-after-load 'flycheck
-  (with-eval-after-load 'tide
-	(flycheck-add-next-checker 'tsx-tide '(warning . typescript-tslint) 'append)
-	(flycheck-add-mode 'typescript-tslint 'web-mode)))
+(flycheck-add-next-checker 'tsx-tide '(warning . typescript-tslint) 'append)
+(flycheck-add-mode 'typescript-tslint 'web-mode)
 
 
 ;; Format document before saving with the right options
