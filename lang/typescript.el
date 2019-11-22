@@ -14,14 +14,13 @@
 	(when (member extension '("ts" "tsx"))
 	  (tide-setup)
 	  (flycheck-mode +1)
-	  (tide-hl-identifier-mode +1)
 	  (setq flycheck-check-syntax-automatically '(save mode-enabled idle-change))
 	  (setq web-mode-auto-quote-style 2) ; Use single quote
 	  (eldoc-mode +1)
 	  ;; Explicitly set checkers because flycheck is selecting the wrong checker (eslint)
 	  ;; when extension is ts
 	  (if (string-equal extension "ts")
-		  (flycheck-select-checker 'typescript-tslint))
+		  (flycheck-select-checker 'typescript-tide)) 
 	  (if (string-equal extension "tsx")
 		  (flycheck-select-checker 'tsx-tide))
 	  (company-mode-on))))
@@ -31,6 +30,7 @@
 ;; https://github.com/ananthakumaran/tide/issues/95
 (flycheck-add-next-checker 'tsx-tide '(warning . typescript-tslint) 'append)
 (flycheck-add-mode 'typescript-tslint 'web-mode)
+(flycheck-add-mode 'typescript-tide 'web-mode)
 
 
 ;; Format document before saving with the right options

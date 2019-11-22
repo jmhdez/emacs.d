@@ -3,8 +3,8 @@
 
 ;; Copyright 2011-2019 François-Xavier Bois
 
-;; Version: 16.0.24
-;; Package-Version: 20190915.1855
+;; Version: 16.0.25
+;; Package-Version: 20191104.1859
 ;; Author: François-Xavier Bois <fxbois AT Google Mail Service>
 ;; Maintainer: François-Xavier Bois
 ;; Package-Requires: ((emacs "23.1"))
@@ -25,7 +25,7 @@
 
 ;;---- CONSTS ------------------------------------------------------------------
 
-(defconst web-mode-version "16.0.24"
+(defconst web-mode-version "16.0.25"
   "Web Mode version.")
 
 ;;---- GROUPS ------------------------------------------------------------------
@@ -45,7 +45,8 @@
 ;;---- CUSTOMS -----------------------------------------------------------------
 
 (defcustom web-mode-block-padding 0
-  "Multi-line block (php, ruby, java, python, asp, etc.) left padding."
+  "Multi-line block (php, ruby, java, python, asp, etc.) left padding.
+   -1 to have to code aligned on the column 0."
   :type '(choice (integer :tags "Number of spaces")
 		         (const :tags "No indent" nil))
   :group 'web-mode)
@@ -267,7 +268,7 @@ See web-mode-block-face."
   :group 'web-mode)
 
 (defcustom web-mode-extra-auto-pairs '()
-  "A list of additional snippets."
+  "A list of additional auto-pairs."
   :type '(alist :key-type string :value-type string)
   :group 'web-mode)
 
@@ -859,9 +860,10 @@ Must be used in conjunction with web-mode-enable-block-face."
     ("python"           . ())
     ("razor"            . ("play" "play2"))
     ("riot"             . ())
-    ("spip"             . ())
-    ("template-toolkit" . ())
     ("smarty"           . ())
+    ("spip"             . ())
+    ("svelte"           . ("svelte"))
+    ("template-toolkit" . ())
     ("thymeleaf"        . ())
     ("underscore"       . ("underscore.js"))
     ("velocity"         . ("vtl" "cheetah" "ssp"))
@@ -901,10 +903,10 @@ Must be used in conjunction with web-mode-enable-block-face."
 
 (defvar web-mode-engine-file-regexps
   '(("angular"          . "\\.component.html\\'")
-    ("artanis"          . "\\.tpl\\'")
+    ("archibus"         . "\\.axvw\\'")
+    ;;("artanis"          . "\\.tpl\\'") // conflict with smarty, see below
     ("asp"              . "\\.asp\\'")
     ("aspx"             . "\\.as[cp]x\\'")
-    ("archibus"         . "\\.axvw\\'")
     ("blade"            . "\\.blade\\.php\\'")
     ("cl-emb"           . "\\.clemb\\'")
     ("clip"             . "\\.ctml\\'")
@@ -931,16 +933,16 @@ Must be used in conjunction with web-mode-enable-block-face."
     ("razor"            . "\\.\\(cs\\|vb\\)html\\|\\.razor\\'")
     ("riot"             . "\\.tag\\'")
     ("smarty"           . "\\.tpl\\'")
+    ("svelte"           . "\\.svelte\\'")
     ("template-toolkit" . "\\.tt.?\\'")
     ("thymeleaf"        . "\\.thtml\\'")
     ("velocity"         . "\\.v\\(sl\\|tl\\|m\\)\\'")
     ("vue"              . "\\.vue\\'")
     ("xoops"            . "\\.xoops'")
-
-    ("spip"             . "spip")
+    ;; regexp on the path, not just the extension
     ("django"           . "[st]wig")
     ("razor"            . "scala")
-
+    ("spip"             . "spip")
     )
   "Engine file extensions.")
 
@@ -1131,9 +1133,9 @@ Must be used in conjunction with web-mode-enable-block-face."
                            ("<%#" . "%>")
                            ("<%-" . "%>")))
     ("erb"              . (("<% " . " %>")
-                           ("<%=" . "%>")
+                           ("<%=" . " %>")
                            ("<%#" . "%>")
-                           ("<%-" . "%>")))
+                           ("<%-" . " %>")))
     ("freemarker"       . (("<% " . " %>")
                            ("<#-" . "- | -->")
                            ("${ " . " }")
@@ -1217,6 +1219,12 @@ Must be used in conjunction with web-mode-enable-block-face."
                  ("js"         . "{% javascript | %}\n\n{% endjavascript %}")
                  ("schema"     . "{% javascript | %}\n\n{% endschema %}")
                  ("safe"       . "{% safe | %}\n\n{% endsafe %}")))
+    ("mako" . (("if"        . "% if |:\n% endif")
+               ("for"       . "% for | in :\n% endfor")
+               ("doc"       . "<%doc>\n|\n</%doc>")
+               ("inherit"   . "<%inherit file=\"|\" />")
+               ("namespace" . "<%namespace name=\"|\" file=\"\" import=\"\"/>")
+               ("block"     . "<%block name=\"|\">\n</%block>")))
     ("template-toolkit" . (("if"      . "[% IF | %]\n\n[% END %]")))
     (nil . (("html5" . "<!doctype html>\n<html>\n<head>\n<title></title>\n<meta charset=\"utf-8\" />\n</head>\n<body>\n|\n</body>\n</html>")
             ("table" . "<table><tbody>\n<tr>\n<td>|</td>\n<td></td>\n</tr>\n</tbody></table>")
@@ -1272,9 +1280,10 @@ Must be used in conjunction with web-mode-enable-block-face."
    '("template-toolkit" . "\\[%.\\|%%#")
    '("underscore"       . "<%")
    '("velocity"         . "#[[:alpha:]#*]\\|$[[:alpha:]!{]")
-   '("vue"              . "{{")
+   '("vue"              . "{{\\|[:@][-[:alpha:]]+=\"")
    '("web2py"           . "{{")
    '("xoops"            . "<{[[:alpha:]#$/*\"]")
+   '("svelte"           . "{.")
    )
   "Engine regexps used to identify blocks.")
 
@@ -1418,21 +1427,21 @@ shouldn't be moved back.)")
   (regexp-opt
    (append
     (cdr (assoc "php" web-mode-extra-keywords))
-    '("and" "array" "as" "break"
-      "callable" "case" "catch"  "catch all" "class" "clone" "const" "continue"
-      "default" "die" "do" "echo" "else" "elseif" "empty"
-      "endfor" "endforeach" "endif" "endswitch" "endwhile" "exit" "extends"
-      "finally" "for" "foreach" "function" "global" "goto"
-      "if" "include" "include_once" "instanceof" "interface" "isset"
-      "list" "next" "new" "or" "private" "protected" "public"
-      "require" "require_once" "return" "static" "switch" "try" "throw"
-      "unset" "use" "var" "when" "while" "xor" "yield"))))
+    '("abstract" "and" "array" "as" "break" "case" "catch" "class" "clone"
+      "const" "continue" "declare" "default" "die" "do" "echo" "else" "elseif"
+      "empty" "enddeclare" "endfor" "endforeach" "endif" "endswitch" "endwhile"
+      "eval" "exit" "extends" "final" "finally" "fn" "for" "foreach" "function"
+      "global" "goto" "if" "implements" "include" "include_once" "instanceof"
+      "insteadof" "interface" "isset" "list" "namespace" "new" "or" "parent"
+      "print" "private" "protected" "public" "require" "require_once" "return"
+      "self" "static" "switch" "trait" "try" "throw" "unset" "use" "var"
+      "while" "xor" "yield" "yield from"))))
 
 (defvar web-mode-php-types
   (eval-when-compile
     (regexp-opt
-     '("array" "bool" "boolean" "char" "const" "double" "float"
-       "int" "integer" "long" "mixed" "object" "real" "string"))))
+     '("array" "bool" "boolean" "callable" "float" "int" "integer"
+       "iterable" "mixed" "object" "resource" "string" "void"))))
 
 (defvar web-mode-css-at-rules
   (eval-when-compile
@@ -1657,6 +1666,9 @@ shouldn't be moved back.)")
 (defvar web-mode-closure-keywords
   (eval-when-compile
     (regexp-opt '("in" "and" "not" "or"))))
+
+(defvar web-mode-svelte-keywords
+  (regexp-opt '("as")))
 
 (defvar web-mode-django-control-blocks
   (append
@@ -1894,6 +1906,17 @@ shouldn't be moved back.)")
      (1 'web-mode-block-attr-name-face)
      (2 'web-mode-block-attr-value-face))
    '("\\\([[:alnum:]_.]+\\)" 0 'web-mode-variable-name-face)
+   ))
+
+(defvar web-mode-svelte-font-lock-keywords
+  (list
+   (cons (concat "[ ]\\(" web-mode-svelte-keywords "\\)[ ]") '(1 'web-mode-keyword-face))
+   '("{[#:/@]\\([[:alpha:]_.]+\\)" 1 'web-mode-block-control-face)
+   '("\\_<\\([[:alnum:]_]+=\\)\\(\"[^\"]*\"\\|[[:alnum:]_]*\\)"
+      (1 'web-mode-block-attr-name-face)
+      (2 'web-mode-block-attr-value-face))
+   '("\\\([[:alnum:]_.]+\\)" 0 'web-mode-variable-name-face)
+   '("\\_<\\([$]\\)\\([[:alnum:]_]+\\)" (1 'web-mode-constant-face) (2 'web-mode-variable-name-face))
    ))
 
 (defvar web-mode-template-toolkit-font-lock-keywords
@@ -2285,6 +2308,7 @@ shouldn't be moved back.)")
     ("velocity"         . web-mode-velocity-font-lock-keywords)
     ("vue"              . web-mode-vue-font-lock-keywords)
     ("xoops"            . web-mode-smarty-font-lock-keywords)
+    ("svelte"           . web-mode-svelte-font-lock-keywords)
     )
   "Engines font-lock keywords")
 
@@ -3036,6 +3060,18 @@ another auto-completion with different ac-sources (e.g. ac-php)")
            )
           ) ;dust
 
+         ((string= web-mode-engine "svelte")
+          (cond
+           ((string= sub2 "{!")
+            (setq closing-string "!}"))
+           (t
+            (setq closing-string '("{". "}") ;;closing-string "}"
+                  delim-open "{[#/:?@><+^]?"
+                  delim-close "/?}")
+            )
+           )
+          ) ;svelte
+
          ((string= web-mode-engine "closure")
           (cond
            ((string= sub2 "//")
@@ -3065,9 +3101,15 @@ another auto-completion with different ac-sources (e.g. ac-php)")
           ) ;angular
 
          ((string= web-mode-engine "vue")
-          (setq closing-string "}}"
-                delim-open "{{"
-                delim-close "}}")
+          (cond
+           ((string-match-p "[:@][-[:alpha:]]+=\"" tagopen)
+            (setq closing-string "\""
+                  delim-open tagopen
+                  delim-close "\""))
+           ((string= tagopen "{{")
+            (setq closing-string "}}"
+                  delim-open "{{"
+                  delim-close "}}")))
           ) ;vue
 
          ((string= web-mode-engine "mason")
@@ -3556,6 +3598,7 @@ another auto-completion with different ac-sources (e.g. ac-php)")
         )
        ((looking-at-p "[ \n]*{")
         (search-forward "{")
+        (search-forward "=>" (point-at-eol) 't)
         (if (looking-at-p "[ \n]*[<@]")
             (setq continue nil)
           (backward-char)
@@ -3578,7 +3621,7 @@ another auto-completion with different ac-sources (e.g. ac-php)")
   (when (member web-mode-engine
                 '("artanis" "asp" "aspx" "cl-emb" "clip" "closure" "ctemplate" "django" "dust"
                   "elixir" "ejs" "erb" "freemarker" "go" "hero" "jsp" "lsp" "mako" "mason" "mojolicious"
-                  "smarty" "template-toolkit" "web2py" "xoops"))
+                  "smarty" "template-toolkit" "web2py" "xoops" "svelte"))
     (save-excursion
       (when delim-open
         (goto-char reg-beg)
@@ -3877,6 +3920,9 @@ another auto-completion with different ac-sources (e.g. ac-php)")
         (setq regexp "\"\\|'"))
        )
       ) ;closure
+
+     ((string= web-mode-engine "svelte")
+      ) ;svelte
 
      ) ;cond
 
@@ -4499,6 +4545,25 @@ another auto-completion with different ac-sources (e.g. ac-php)")
           (setq controls (append controls (list (cons 'open "{")))))
          )
         ) ;hero
+
+       ((string= web-mode-engine "svelte")
+        (cond
+         ((eq (char-after (1- reg-end)) ?\/)
+          )
+         ((eq (char-after (1+ reg-beg)) ?\:)
+          (setq pos (web-mode-block-control-previous-position 'open reg-beg))
+          (when pos
+            (setq controls (append controls
+                                   (list
+                                    (cons 'inside
+                                          (cdr (car (web-mode-block-controls-get pos))))))))
+          )
+         ((looking-at "{/\\([[:alpha:].]+\\)")
+          (setq controls (append controls (list (cons 'close (match-string-no-properties 1))))))
+         ((looking-at "{[#?><+^]\\([[:alpha:].]+\\)")
+          (setq controls (append controls (list (cons 'open (match-string-no-properties 1))))))
+         )
+        ) ;svelte
 
        ) ;cond engine
 
@@ -7418,6 +7483,11 @@ another auto-completion with different ac-sources (e.g. ac-php)")
             (when (web-mode-rsf "{@")
               (setq reg-col (current-column))))
           )
+         ((string= web-mode-engine "svelte")
+          (save-excursion
+            (when (web-mode-rsf "{@")
+              (setq reg-col (current-column))))
+          )
          ((string= web-mode-engine "template-toolkit")
           (setq reg-beg (+ reg-beg 3)
                 reg-col (+ reg-col 3))
@@ -7545,7 +7615,14 @@ another auto-completion with different ac-sources (e.g. ac-php)")
        ((member language '("css" "sql" "markdown" "pug" "stylus"))
         (setq reg-col (if web-mode-style-padding (+ reg-col web-mode-style-padding) 0)))
        ((not (member language '("html" "xml" "razor")))
-        (setq reg-col (if web-mode-block-padding (+ reg-col web-mode-block-padding) 0)))
+        (setq reg-col
+              (cond
+               ((not web-mode-block-padding) reg-col)
+               ((eq web-mode-block-padding -1) 0)
+               (t (+ reg-col web-mode-block-padding))
+               ) ;cond
+              ) ;setq
+        )
        )
 
       (list :curr-char curr-char
@@ -7868,10 +7945,17 @@ another auto-completion with different ac-sources (e.g. ac-php)")
 
          ((member curr-char '(?\} ?\) ?\]))
           (when debug (message "I250(%S) closing-paren" pos))
-          (let (ori)
+          (let (ori pos2)
+            (setq pos2 pos)
+            ;; #1096
+            (when (looking-at-p ".[\]})]+")
+              (skip-chars-forward "[\]})]")
+              (backward-char)
+              (setq pos2 (point))
+              ) ;when
             (if (get-text-property pos 'block-side)
-                (setq ori (web-mode-block-opening-paren-position pos reg-beg))
-              (setq ori (web-mode-part-opening-paren-position pos reg-beg)))
+                (setq ori (web-mode-block-opening-paren-position pos2 reg-beg))
+              (setq ori (web-mode-part-opening-paren-position pos2 reg-beg)))
             ;;(message "ori=%S" ori)
             (cond
              ((null ori)
@@ -8111,18 +8195,18 @@ another auto-completion with different ac-sources (e.g. ac-php)")
 
          ((and is-js
                (or (eq prev-char ?\))
-                   (string-match-p "^else$" prev-line)))
+                   (string-match-p "\\(^\\|[}[:space:]]+\\)else$" prev-line)))
           (when debug (message "I370(%S)" pos))
           (cond
-           ((looking-at-p "{") ;; #1020
-            (setq offset prev-indentation))
-           ((string-match-p "^else$" prev-line)
+           ((and (string-match-p "else$" prev-line)
+                 (not (string-match-p "^{" curr-line)))
             (setq offset (+ prev-indentation web-mode-code-indent-offset))
             )
            ((setq tmp (web-mode-part-is-opener prev-pos reg-beg))
             ;;(message "is-opener")
-            (setq offset (+ tmp web-mode-code-indent-offset))
-            ;;(setq offset (+ prev-indentation web-mode-code-indent-offset))
+            (if (looking-at-p "{") ;; #1020, #1053
+                (setq offset tmp)
+              (setq offset (+ tmp web-mode-code-indent-offset)))
             )
            (t
             (setq offset
@@ -8606,10 +8690,10 @@ another auto-completion with different ac-sources (e.g. ac-php)")
       (setq prev-line (car h))
       (setq prev-indentation (cdr h))
       (cond
-       ((string-match-p "^\\(pass\\|else\\|elif\\|when\\)" line)
+       ((string-match-p "^\\(pass\\|else\\|elif\\|when\\|except\\)" line)
         (setq out (- prev-indentation language-offset))
         )
-       ((string-match-p "\\(if\\|else\\|elif\\|for\\|while\\)" prev-line)
+       ((string-match-p "\\(if\\|else\\|elif\\|for\\|while\\|try\\|except\\)" prev-line)
         (setq out (+ prev-indentation language-offset))
         )
        (t
@@ -10290,6 +10374,13 @@ Prompt user if TAG-NAME isn't provided."
     (web-mode-insert-text-at-pos "*/" (- end 2))
     (web-mode-insert-text-at-pos "/*" (+ beg 1 (if (web-mode-looking-at "<\\?php" beg) 5 3)))))
 
+(defun web-mode-comment-svelte-block (pos)
+  (let (beg end)
+    (setq beg (web-mode-block-beginning-position pos)
+          end (web-mode-block-end-position pos))
+    (web-mode-insert-text-at-pos "!" end)
+    (web-mode-insert-text-at-pos "!" (1+ beg))))
+
 (defun web-mode-comment-boundaries (&optional pos)
   (interactive)
   (unless pos (setq pos (point)))
@@ -10458,6 +10549,13 @@ Prompt user if TAG-NAME isn't provided."
     (web-mode-remove-text-at-pos 2 (+ beg 2))
     (web-mode-remove-text-at-pos 2 (- end 5))))
 
+(defun web-mode-uncomment-svelte-block (pos)
+  (let (beg end)
+    (setq beg (web-mode-block-beginning-position pos)
+          end (web-mode-block-end-position pos))
+    (web-mode-remove-text-at-pos 1 (1- end))
+    (web-mode-remove-text-at-pos 1 (1+ beg))))
+
 (defun web-mode-snippet-names ()
   (let (codes)
     (dolist (snippet web-mode-snippets)
@@ -10491,11 +10589,18 @@ Prompt user if TAG-NAME isn't provided."
       (insert snippet)
       (setq pos (point)
             end (point))
-      (when (string-match-p "|" snippet)
+      (cond
+       ((string-match-p "¦" snippet)
+        (search-backward "¦")
+        (delete-char 1)
+        (setq pos (point)
+              end (1- end)))
+       ((string-match-p "|" snippet)
         (search-backward "|")
         (delete-char 1)
         (setq pos (point)
               end (1- end)))
+       ) ;cond
       (when sel
         (insert sel)
         (setq pos (point)
@@ -11456,6 +11561,7 @@ Prompt user if TAG-NAME isn't provided."
    ((string= web-mode-engine "closure")   (concat "{/" type "}"))
    ((string= web-mode-engine "smarty")    (concat "{/" type "}"))
    ((string= web-mode-engine "xoops")     (concat "<{/" type "}>"))
+   ((string= web-mode-engine "svelte")    (concat "{/" type "}"))
    ((string= web-mode-engine "underscore")        "<% } %>")
    ((string= web-mode-engine "lsp")               "<% ) %>")
    ((string= web-mode-engine "erb")               "<% } %>")
