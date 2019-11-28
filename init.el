@@ -116,6 +116,7 @@
 (global-hl-line-mode t)
 
 ;; neotree
+(setq neo-window-fixed-size nil)
 (setq neo-window-width 35)
 ;; show current file when opened
 (setq neo-smart-open t) 
