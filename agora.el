@@ -71,6 +71,7 @@
   (interactive)
   (shell "*build webadmin*")
   (compilation-shell-minor-mode)
+  (add-hook 'comint-output-filter-functions 'comint-truncate-buffer nil t)
   (toggle-truncate-lines)
   (insert "npm run dev")
   (comint-send-input nil t))
