@@ -54,7 +54,8 @@
   (local-set-key (kbd "C-c C-t f") 'tide-references)
   (local-set-key (kbd "C-c C-t e") 'tide-project-errors)
   (local-set-key (kbd "C-c C-t x") 'tide-fix)
-  (local-set-key (kbd "M-RET") 'tide-fix))
+  (local-set-key (kbd "M-RET") 'tide-fix)
+  (local-set-key (kbd "<f12>") 'flycheck-next-error))
 
 (add-hook 'typescript-mode-hook 'tide-set-keys)
 (add-hook 'web-mode-hook 'tide-set-keys)

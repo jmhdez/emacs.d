@@ -81,10 +81,11 @@
 (doom-themes-neotree-config)
 (doom-modeline-mode 1)
 (setq doom-modeline-height 28)
-(setq doom-modeline-icon 1)
+(setq doom-modeline-icon (display-graphic-p))
 (setq doom-modeline-bar-width 3)
 (setq doom-modeline-major-mode-icon nil)
 (setq doom-modeline-minor-modes t)
+(setq doom-modeline-buffer-file-name-style 'buffer-name)
 (minions-mode 1)
 
 ;; linum-mode
