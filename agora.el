@@ -66,12 +66,20 @@
    "retail:aux" (concat (file-name-as-directory ag:retail-base-dir) ""))
   (ag:doomline-retail))
 
+(defun ag:truncate-build-buffer (_)
+  "Truncates buffer but instead of truncating a single line each time,
+truncates down to half the limit to avoid being truncating too frequently"
+  (setq comint-buffer-maximum-size 512) ;; keep last 512 lines
+  (let ((lines (count-lines (point-min) (point-max))))
+	(when (> lines 1024)
+		(comint-truncate-buffer))))
+
 (defun ag:admin-build ()
   "Starts a shell to build web admin"
   (interactive)
   (shell "*build webadmin*")
   (compilation-shell-minor-mode)
-  (add-hook 'comint-output-filter-functions 'comint-truncate-buffer nil t)
+  (add-hook 'comint-output-filter-functions 'ag:truncate-build-buffer nil t)
   (toggle-truncate-lines)
   (insert "npm run dev")
   (comint-send-input nil t))
