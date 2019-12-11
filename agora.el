@@ -79,6 +79,7 @@ truncates down to half the limit to avoid being truncating too frequently"
   (interactive)
   (shell "*build webadmin*")
   (compilation-shell-minor-mode)
+  (set-buffer-process-coding-system 'utf-8 'windows-1252)
   (add-hook 'comint-output-filter-functions 'ag:truncate-build-buffer nil t)
   (toggle-truncate-lines)
   (insert "npm run dev")
