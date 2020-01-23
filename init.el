@@ -82,7 +82,7 @@
 (doom-modeline-mode 1)
 (setq doom-modeline-height 28)
 (setq doom-modeline-icon (display-graphic-p))
-(setq doom-modeline-bar-width 3)
+(setq doom-modeline-bar-width 5)
 (setq doom-modeline-major-mode-icon nil)
 (setq doom-modeline-minor-modes t)
 (setq doom-modeline-buffer-file-name-style 'buffer-name)
@@ -94,10 +94,9 @@
 (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
 (solaire-mode-swap-bg)
 
-
-;; linum-mode
-(global-linum-mode t)
-(setq linum-format "%3d")
+;; Show line numbers
+(global-display-line-numbers-mode)
+(setq-default display-line-numbers-width 3)
 
 ;; Fonts
 (let ((font-family "Fira Code"))
@@ -110,7 +109,7 @@
 	(set-face-attribute 'default nil :weight 'regular)))
 
 
-(add-to-list 'default-frame-alist '(left-fringe . 4))
+(add-to-list 'default-frame-alist '(left-fringe . 0))
 (add-to-list 'default-frame-alist '(right-fringe . 0))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
