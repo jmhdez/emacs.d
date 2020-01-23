@@ -131,7 +131,9 @@
 (setq neo-window-fixed-size nil)
 (setq neo-window-width 35)
 ;; show current file when opened
-(setq neo-smart-open t) 
+(setq neo-smart-open t)
+(setq neo-autorefresh t)
+(setq neo-hide-cursor t)
 ;; set neotree root to projectile root
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
