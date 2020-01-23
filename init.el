@@ -61,7 +61,7 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 
-(setq-default truncate-lines nil
+(setq-default truncate-lines t
 			  truncate-partial-width-windows nil)
 
 (setq inhibit-startup-message t)
@@ -120,10 +120,6 @@
 
 (setq-default indents-tab-mode t)
 (setq-default tab-width 4)
-
-;; Do NOT truncate lines. I'm sure this is not the recommended way
-;; to do it, but I don't know how to make it work
-(add-hook 'find-file-hook (lambda () (toggle-truncate-lines t)))
 
 (global-hl-line-mode t)
 
