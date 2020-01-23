@@ -2010,7 +2010,7 @@
 	    [(3 8)
 	     nil "advanced highlighting of matching parentheses" single])
  (meta-presenter .
-		 [(20150501 1412)
+		 [(20150501 410)
 		  nil "A simple multi-file presentation tool for Emacs" single])
  (message-templ .
 		[(0 1 20141026)
