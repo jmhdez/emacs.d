@@ -193,6 +193,16 @@ window."
   :type 'boolean
   :group 'neotree)
 
+(defcustom neo-show-slash-for-folder t
+  "*If non-nil, show the slash at the end of folder (folder/)"
+  :type 'boolean
+  :group 'neotree)
+
+(defcustom neo-reset-size-on-open nil
+  "*If non-nil, the width of the noetree window will be reseted every time a file is open."
+  :type 'boolean
+  :group 'neotree)
+
 (defcustom neo-theme 'classic
   "*The tree style to display.
 `classic' use icon to display, it only it suitable for GUI mode.
@@ -282,7 +292,7 @@ width (including the indent) larger than `neo-window-width', and
   :group 'neotree)
 
 (defcustom neo-hidden-regexp-list
-  '("^\\." "\\.pyc$" "~$" "^#.*#$" "\\.elc$")
+  '("^\\." "\\.pyc$" "~$" "^#.*#$" "\\.elc$" "\\.o$")
   "*The regexp list matching hidden files."
   :type  '(repeat (choice regexp))
   :group 'neotree)
@@ -371,7 +381,7 @@ This variable is used in `neo-vc-for-node' when
   :type 'boolean
   :group 'neotree)
 
-(defcustom neo-force-change-root nil
+(defcustom neo-force-change-root t
   "If not nil, do not prompt when switching root."
   :type 'boolean
   :group 'neotree)
@@ -387,6 +397,11 @@ This variable is used in `neo-vc-for-node' when
   "*Name of the application that is used to open a file under point.
 By default it is xdg-open."
   :type 'string
+  :group 'neotree)
+
+(defcustom neo-hide-cursor nil
+  "If not nil, hide cursor in NeoTree buffer and turn on line higlight."
+  :type 'boolean
   :group 'neotree)
 
 ;;
@@ -617,6 +632,8 @@ The car of the pair will store fullpath, and cdr will store line number.")
                                      :file-fn 'neo-open-file-ace-window))
     (define-key map (kbd "d")       (neotree-make-executor
                                      :dir-fn 'neo-open-dired))
+    (define-key map (kbd "O")       (neotree-make-executor
+                                     :dir-fn  'neo-open-dir-recursive))
     (define-key map (kbd "SPC")     'neotree-quick-look)
     (define-key map (kbd "g")       'neotree-refresh)
     (define-key map (kbd "q")       'neotree-hide)
@@ -638,6 +655,7 @@ The car of the pair will store fullpath, and cdr will store line number.")
     (define-key map (kbd "C-c C-f") 'find-file-other-window)
     (define-key map (kbd "C-c C-c") 'neotree-change-root)
     (define-key map (kbd "C-c c")   'neotree-dir)
+    (define-key map (kbd "C-c C-a")  'neotree-collapse-all)
     (cond
      ((eq neo-keymap-style 'default)
       (define-key map (kbd "C-c C-n") 'neotree-create-node)
@@ -660,6 +678,10 @@ The car of the pair will store fullpath, and cdr will store line number.")
         buffer-read-only t              ; read only
         truncate-lines -1
         neo-buffer--show-hidden-file-p neo-show-hidden-files)
+  (when neo-hide-cursor
+    (progn
+      (setq cursor-type nil)
+      (hl-line-mode +1)))
   (pcase neo-mode-line-type
     (`neotree
      (setq-local mode-line-format neo-mode-line-format)
@@ -755,7 +777,8 @@ If INIT-P is non-nil and global NeoTree buffer not exists, then create it."
 (defun neo-global--do-autorefresh ()
   "Do auto refresh."
   (interactive)
-  (when (and neo-autorefresh (neo-global--window-exists-p))
+  (when (and neo-autorefresh (neo-global--window-exists-p)
+             (buffer-file-name))
     (neotree-refresh t)))
 
 (defun neo-global--open ()
@@ -793,8 +816,9 @@ The description of ARG is in `neotree-enter'."
   (when (eq (safe-length (window-list)) 1)
     (neo-buffer--with-resizable-window
      (split-window-horizontally)))
-  (neo-global--when-window
-    (neo-window--zoom 'minimize))
+  (when neo-reset-size-on-open
+    (neo-global--when-window
+      (neo-window--zoom 'minimize)))
   ;; select target window
   (cond
    ;; select window with winum
@@ -1240,8 +1264,8 @@ Optional NODE-NAME is used for the `icons' theme"
       (unless (require 'all-the-icons nil 'noerror)
         (error "Package `all-the-icons' isn't installed"))
       (setq-local tab-width 1)
-      (or (and (equal name 'open)  (insert (all-the-icons-icon-for-dir node-name "down")))
-          (and (equal name 'close) (insert (all-the-icons-icon-for-dir node-name "right")))
+      (or (and (equal name 'open)  (insert (all-the-icons-icon-for-dir (directory-file-name node-name) "down")))
+          (and (equal name 'close) (insert (all-the-icons-icon-for-dir (directory-file-name node-name) "right")))
           (and (equal name 'leaf)  (insert (format "\t\t\t%s\t" (all-the-icons-icon-for-file node-name))))))
      (t
       (or (and (equal name 'open)  (funcall n-insert-symbol "- "))
@@ -1341,24 +1365,21 @@ PATH is value."
     (neo-buffer--newline-and-begin)))
 
 (defun neo-buffer--insert-root-entry (node)
+  (neo-buffer--node-list-set nil node)
+  (cond ((eq neo-cwd-line-style 'button)
+         (neo-path--insert-header-buttonized node))
+        (t
+         (neo-buffer--insert-with-face (neo-path--shorten node (window-body-width))
+                                       'neo-root-dir-face)))
+  (neo-buffer--newline-and-begin)
   (when neo-show-updir-line
+    (neo-buffer--insert-fold-symbol 'close node)
     (insert-button ".."
                    'action '(lambda (x) (neotree-change-root))
                    'follow-link t
-                   'face neo-file-link-face
+                   'face neo-dir-link-face
                    'neo-full-path (neo-path--updir node))
-    (let ((start (point)))
-      (insert " (up a dir)")
-      (set-text-properties start (point) '(face neo-header-face)))
-    (neo-buffer--newline-and-begin))
-  (neo-buffer--node-list-set nil node)
-  (cond
-   ((eq neo-cwd-line-style 'button)
-    (neo-path--insert-header-buttonized node))
-   (t
-    (neo-buffer--insert-with-face (neo-path--shorten node (window-body-width))
-                                  'neo-root-dir-face)))
-  (neo-buffer--newline-and-begin))
+    (neo-buffer--newline-and-begin)))
 
 (defun neo-buffer--help-echo-message (node-name)
   (cond
@@ -1376,7 +1397,7 @@ PATH is value."
       (insert-char ?\s 2))
     (neo-buffer--insert-fold-symbol
      (if expanded 'open 'close) node)
-    (insert-button (concat node-short-name "/")
+    (insert-button (if neo-show-slash-for-folder (concat node-short-name "/") node-short-name)
                    'follow-link t
                    'face neo-dir-link-face
                    'neo-full-path node
@@ -1512,7 +1533,7 @@ If SAVE-POS-P is non-nil, it will be auto save current line number."
        (setq default-directory (neo-path--updir btn-full-path)))
     :dir-fn
     '(lambda (path _)
-       (setq default-directory path)))))
+       (setq default-directory (file-name-as-directory path))))))
 
 (defun neo-buffer--get-button-current-line ()
   "Return the first button in current line."
@@ -1806,6 +1827,31 @@ ARG is ignored."
           (when new-state (forward-line 1))
           (neo-point-auto-indent))))))
 
+
+(defun neo--expand-recursive (path state)
+  "Set the state of children recursively.
+
+The children of PATH will have state STATE."
+  (let ((children (car (neo-buffer--get-nodes path) )))
+    (dolist (node children)
+      (neo-buffer--set-expand node state)
+      (neo--expand-recursive node state ))))
+
+(defun neo-open-dir-recursive (full-path &optional arg)  
+  "Toggle fold a directory node recursively.
+
+The children of the node will also be opened recursively.
+FULL-PATH is the path of the directory.
+ARG is ignored."
+  (if neo-click-changes-root
+      (neotree-change-root)    
+    (let ((new-state (neo-buffer--toggle-expand full-path))
+          (children (car (neo-buffer--get-nodes full-path))))
+      (dolist (node children)
+        (neo-buffer--set-expand node new-state)
+        (neo--expand-recursive node new-state))
+      (neo-buffer--refresh t))))
+
 (defun neo-open-dired (full-path &optional arg)
   "Open file or directory node in `dired-mode'.
 
@@ -1962,7 +2008,8 @@ If the current node is the first node then the last node is selected."
   (interactive)
   (let* ((filename (neo-buffer--get-filename-current-line))
          (buffer (find-buffer-visiting filename))
-         (deleted-p nil))
+         (deleted-p nil)
+         (trash delete-by-moving-to-trash))
     (catch 'end
       (if (null filename) (throw 'end nil))
       (if (not (file-exists-p filename)) (throw 'end nil))
@@ -1973,7 +2020,7 @@ If the current node is the first node then the last node is selected."
           ;; delete directory
           (progn
             (unless (neo-path--has-subfile-p filename)
-              (delete-directory filename)
+              (delete-directory filename nil trash)
               (setq deleted-p t)
               (throw 'end nil))
             (when (funcall neo-confirm-delete-directory-recursively
@@ -1983,11 +2030,11 @@ If the current node is the first node then the last node is selected."
                              (format "kill buffers for files in directory %S?"
                                      filename))
                 (neo-util--kill-buffers-for-path filename))
-              (delete-directory filename t)
+              (delete-directory filename t trash)
               (setq deleted-p t)))
         ;; delete file
         (progn
-          (delete-file filename)
+          (delete-file filename trash)
           (when buffer
             (kill-buffer-ask buffer))
           (setq deleted-p t))))
@@ -2043,6 +2090,15 @@ If the current node is the first node then the last node is selected."
         (neo-window--zoom 'maximize)
       (neo-window--zoom 'minimize))))
 
+(defun neotree-collapse-all ()
+  (interactive)
+  "Collapse all expanded folders in the neotree buffer"
+  (setq list-of-expanded-folders neo-buffer--expanded-node-list)
+  (dolist (folder list-of-expanded-folders)
+    (neo-buffer--toggle-expand folder)
+    (neo-buffer--refresh t)
+    )
+  )
 ;;;###autoload
 (defun neotree-projectile-action ()
   "Integration with `Projectile'.
@@ -2071,9 +2127,15 @@ automatically."
 (defun neotree-show ()
   "Show the NeoTree window."
   (interactive)
-  (let ((cw (selected-window)))  ;; save current window
+  (let ((cw (selected-window))
+        (path (buffer-file-name)))  ;; save current window and buffer
     (if neo-smart-open
-        (neotree-find)
+        (progn
+          (when (and (fboundp 'projectile-project-p)
+                     (projectile-project-p)
+                     (fboundp 'projectile-project-root))
+            (neotree-dir (projectile-project-root)))
+          (neotree-find path))
       (neo-global--open))
     (neo-global--select-window)
     (when neo-toggle-window-keep-p
@@ -2161,3 +2223,4 @@ which is used to fix issue #209.
 
 (provide 'neotree)
 ;;; neotree.el ends here
+
