@@ -78,6 +78,8 @@ truncates down to half the limit to avoid being truncating too frequently"
   "Starts a shell to build web admin"
   (interactive)
   (shell "*build webadmin*")
+  (display-line-numbers-mode -1)
+  (set-window-margins nil 2)
   (compilation-shell-minor-mode)
   (set-buffer-process-coding-system 'utf-8 'windows-1252)
   (add-hook 'comint-output-filter-functions 'ag:truncate-build-buffer nil t)
