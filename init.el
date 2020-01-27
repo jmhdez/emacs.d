@@ -79,10 +79,15 @@
 (setq doom-themes-enable-bold nil
 	  doom-themes-enable-italic t)
 
+;; fine-tunnig spacegrey theme for neotree and highlight colors
 (load-theme 'doom-spacegrey t)
-;; fine-tunnig spacegrey theme for neotree
+
 (with-eval-after-load 'neotree
-  (set-face-attribute 'neo-dir-link-face nil :foreground "#8FA1B3"))
+  (set-face-attribute 'neo-dir-link-face nil :foreground "#8FA1B3")) ;; spacegrey blue color
+(set-face-attribute 'highlight nil :foreground "#D08770") ; orange
+(set-face-attribute 'highlight nil :background "#232830") ; bg-alt
+(set-face-attribute 'highlight nil :underline t)
+
 
 (doom-themes-neotree-config)
 (doom-modeline-mode 1)
